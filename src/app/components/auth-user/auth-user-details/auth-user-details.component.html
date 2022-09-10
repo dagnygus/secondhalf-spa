@@ -1,0 +1,57 @@
+<div class="auth-user-details__avatar-and-form bg-primary" [@avatar]="animationState">
+  <div class="auth-user-details__avatar-container">
+    <img [src]="fileDataUrl ? (fileDataUrl | mainImageUrl) : (imageUrl | mainImageUrl)"
+          alt="avatar_picture"
+          class="auth-user-details__avatar">
+  </div>
+
+  <form ngFrom (ngSubmit)="onAvatarFormSubmit()">
+    <app-file-picker-input #filePicker
+                            [(ngModel)]="avatarFile"
+                            name="avatar"
+                            class="uniform-queue gap-8 margin-top-16"
+                            readDataUrl
+                            (fileDataUrlChange)="onFileDataChange($event)"
+                            accept="image/jpg, image/png, image/gif, image/bmp, image/jpeg">
+
+        <button type="button" class="avatar-btn" [style.display]="avatarFile ? 'none' : ''" mat-raised-button color="accent" fileAddBtn>Add picture</button>
+        <button type="submit" class="avatar-btn" [style.display]="avatarFile ? '' : 'none'" mat-raised-button color="primary">Save</button>
+        <button type="button" class="avatar-btn" [disabled]="!avatarFile" mat-raised-button color="accent" fileRemoveBtn>Remove</button>
+
+    </app-file-picker-input>
+  </form>
+
+  <div *ngIf="avatarPending" class="auth-user-details__loading-spinner-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</div>
+
+<div class="auth-user-details__details-container" [@authUser]="animationState">
+  <app-user-detail *ngFor="let fieldName of fieldNames; let i=index"
+                   [name]="fieldName"
+                   [label]="labels[i]"
+                   [(value)]="$any(this)[fieldName]"
+                   (detailSubmit)="onDetailSubmit($event)"
+                   (detailCancel)="onDetailCancel($event)"
+                   [patchingUserSoruce]="patchUserStart$"
+                   [userPatchedSource]="patchUserSuccess$"></app-user-detail>
+
+  <ng-template [ngIf]="hasAddressInfo">
+    <app-user-detail *ngFor="let fieldName of addressInfoFieldNames; let i=index"
+                    [name]="fieldName"
+                    [label]="addressInfoLabels[i]"
+                    [(value)]="$any(this)[fieldName]"
+                    (detailSubmit)="onDetailSubmit($event)"
+                    (detailCancel)="onDetailCancel($event)"
+                    [patchingUserSoruce]="patchUserStart$"
+                    [userPatchedSource]="patchUserSuccess$"></app-user-detail>
+  </ng-template>
+</div>
+<ng-template [ngIf]="!hasAddressInfo">
+  <div class="auth-user-details__checkbox-container margin-16">
+    <mat-checkbox @checkbox [(ngModel)]="addAdrressInformation">Add address information</mat-checkbox>
+  </div>
+  <app-address-info-form *ngIf="addAdrressInformation"
+                          (addressFormSubmited)="onAddressFormSubmited($event)"></app-address-info-form>
+</ng-template>
+

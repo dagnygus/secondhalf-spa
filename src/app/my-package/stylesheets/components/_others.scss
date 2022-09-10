@@ -1,0 +1,42 @@
+ol.list-none, ul.list-none {
+  list-style: none;
+}
+
+block {
+  display: block;
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-image-contain, .bg-image-cover {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-clip: border-box;
+  background-origin: border-box;
+}
+
+.bg-image-contain {
+  background-size: contain;
+}
+
+.bg-image-cover {
+  background-size: cover;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}

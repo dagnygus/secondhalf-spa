@@ -1,0 +1,61 @@
+
+<span class="member__age-container row-center bg-gr-accent mat-elevation-z4">
+  {{ member.dateOfBirth | age }}
+</span>
+<div class="member__image-container">
+
+  <img class="member__image"
+        [id]="'cart__' + member.userId"
+        [appLazyImage]="member.mainPhotoUrl | mainImageUrl"
+        [loadingView]="laodingView"
+        #image
+        [appHero]="member.userId"
+        appHeroEasing="ease-in-out"
+        [appHeroDuration]="600"
+        elementToHide="app-member"
+        [appHeroStyles]="{ borderRadius: '6px', objectFit: 'cover' }"
+        appHeroCssClass="mat-elevation-z6">
+
+  <ng-template appLazyImageLoadingView #laodingView="appLazyImageLoadingView">
+    <app-loading-spinner class="member__loading-spiner"></app-loading-spinner>
+  </ng-template>
+
+</div>
+<div class="member__footer-container" @memberFooter>
+  <span class="member__nickname-container">
+    {{ member.nickName }}
+  </span>
+  <span class="member__name-container">
+    {{ member.firstName + ' ' + member.lastName | titlecase }}
+  </span>
+  <div class="mamber__buttons-container">
+
+    <button @memberBtn
+            class="member__btn member__btn-1 mat-elevation-z4"
+            [style.background-image]="likeBtnImageUrl"
+            (click)="onLikeBtnClick()"
+            [disabled]="likePending || member.liked">
+
+      <div *ngIf="likePending"
+           class="member__like-pending-container">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+
+    </button>
+
+    <a [scrollableRouterLink]="isAuth ? ['/member', member.userId] : null"
+        fragment="chat"
+        scrollToId="mat-tab"
+        scrollTranslation="-64"
+        @memberBtn
+        class="member__btn member__btn-2 mat-elevation-z4"
+        [style.background-image]="chatBtnImageUrl"></a>
+
+    <a [routerLink]="['/member', member.userId]"
+        fragment="info"
+        @memberBtn
+        class="member__btn member__btn-3 mat-elevation-z4"
+        [style.background-image]="infoBtnImgUrl"></a>
+
+  </div>
+</div>

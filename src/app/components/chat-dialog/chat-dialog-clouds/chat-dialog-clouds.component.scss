@@ -1,0 +1,58 @@
+:host {
+  display: grid;
+  justify-items: end;
+  align-content: end;
+  padding: 8px;
+  gap: 8px;
+  height: 100%;
+  max-height: 100%;
+  background-color: white;
+  overflow-y: scroll;
+  position: relative;
+
+  > div {
+    padding: 8px;
+  }
+}
+
+.chat-dialog-clouds__cloud {
+  justify-self: start;
+  color: white;
+  min-width: 0;
+  max-width: 70%;
+  text-align: left;
+  border-radius: 4px 4px 16px 4px ;
+}
+
+.chat-dialog-clouds__cloud + .chat-dialog-clouds__own-cloud {
+  margin-top: 32px;
+}
+
+.chat-dialog-clouds__own-cloud + .chat-dialog-clouds__cloud {
+  margin-top: 32px;
+}
+
+.chat-dialog-clouds__own-cloud {
+  // background-color: mat.$primary-color;
+  color: white;
+  align-self: end;
+  text-align: right;
+  border-radius: 4px 4px 4px 16px;
+  max-width: 70%;
+}
+
+.chat-dialog-clouds__no-messages-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+app-loading-spinner {
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  width: 100px;
+  height: 100px;
+}

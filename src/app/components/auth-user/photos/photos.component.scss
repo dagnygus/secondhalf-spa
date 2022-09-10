@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.photos__on-something-container {
+  width: 100%;
+  height: 65vh;
+  background-color: inherit;
+}
+
+.photos__loading-text {
+  font-weight: 600;
+  animation: loading-text-animation 400ms alternate infinite;
+}
+
+.photos__loading-spinner-container {
+  width: 33%;
+  max-width: 200px;
+}
+
+.photos__loading-spinner {
+  width: 100%;
+}
+
+.photos_error-text-container {
+  border-radius: 8px;
+  border: 1px solid red;
+}
+
+.photos_empty-text-container {
+  border-radius: 8px;
+  background-color: white;
+}
+
+@keyframes loading-text-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
+}

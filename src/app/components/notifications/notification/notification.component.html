@@ -1,0 +1,36 @@
+<!-- <div class="notification__container mat-elevation-z6 margin-y-4 row"
+     [ngSwitch]="notification.type"> -->
+<ng-container [ngSwitch]="notification.type">
+  <ng-template ngSwitchCase="chat-notification">
+    <div class="notification__head">
+      <img [src]="notification.photoUrl | mainImageUrl"
+           class="notification__avatar-img mat-elevation-z6" style="object-fit: cover; border-radius: 50%">
+        <mat-icon class="position-absolute notification__icon color-accent">chat</mat-icon>
+    </div>
+
+    <div class="message-notification__tail">
+      <div class="message-notification__info">
+        <span>{{ notification.nickName }} have send You a message.</span>
+      </div>
+
+      <div class="message-notification__content color-primary">
+        <span class="notification__message-content-text"><strong>{{notification.nickName}}: </strong> {{ $any(notification).messageContent }}</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template ngSwitchCase="like-notification">
+    <div class="notification__head">
+      <img [src]="notification.photoUrl | mainImageUrl"
+           class="notification__avatar-img mat-elevation-z6" style="object-fit: cover; border-radius: 50%">
+        <mat-icon class="position-absolute notification__icon color-primary">thumb_up</mat-icon>
+    </div>
+
+    <div class="notification__tail">
+      <span>{{ notification.nickName }} is like You.</span>
+    </div>
+  </ng-template>
+</ng-container>
+
+
+<!-- </div> -->

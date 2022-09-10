@@ -1,0 +1,38 @@
+<div class="photo-modal__container"
+     [class.show]="show || showed"
+     (wheel)="!show">
+  <div class="photo-modal__backdrop" (click)="hidePhotoModal()" [@backdrop]="show"></div>
+
+  <button class="photo-modal__cancel-btn" mat-icon-button (click)="hidePhotoModal()" [@cancelButton]="show"><mat-icon>close</mat-icon></button>
+
+  <div #imgPlaceholder class="photo-modal__image-placeholder"></div>
+
+  <div class="photo-modal__image-container"
+       [@photoWrapper]="{ value: show,
+                          params: {
+                            startTop,
+                            startLeft,
+                            startWidth,
+                            startHeight,
+                            targetTop,
+                            targetLeft,
+                            targetWidth,
+                            targetHeight
+                          }
+                        }">
+      <img class="photo-modal__image" [src]="imageUrl">
+  </div>
+
+  <div class="photo-modal__wrapper-footer margin-top-8">
+    <button mat-raised-button
+            color="primary"
+            [@profilePictureButton]="show"
+            [style.display]="isMain ? 'none' : ''"
+            [disabled]="selectingMainImage"
+            (click)="profilePictureButtonClickHandler()">Set as profile picture</button>
+    <button mat-mini-fab color="warn"
+            [@deleteButton]="show"
+            (click)="deleteButtonClickHandler()"><mat-icon>delete</mat-icon></button>
+  </div>
+
+</div>

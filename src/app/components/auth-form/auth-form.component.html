@@ -1,0 +1,105 @@
+<form class="register-form__container"
+      [class.register-form__containser-with-error-message]="signUpHttpErrorResponse$ | async"
+      [formGroup]="form!"
+      (ngSubmit)="onFormSubmit()">
+
+
+  <div class="register-form__header">
+    <p>Complate the form to register account. If you have accout, please <a routerLink="/signin">ligin</a>.</p>
+  </div>
+
+  <!-- <div *ngIf="signUpHttpErrorResponse$ | async as error"
+       class="item-center w-90">
+    <ng-container [ngSwitch]="error.error.statusCode">
+    <span *ngSwitchCase="422">
+      Validation Failed! Chack the form and correct fields.
+    </span>
+    <span *ngSwitchDefault>
+      An internal server error accoure. Please try again later.
+    </span>
+    </ng-container>
+  </div> -->
+
+  <div class="register-form__input-group">
+
+    <mat-form-field class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" name="firstName" formControlName="firstName">
+      <mat-error *dnng-errors-for="form!.controls.firstName; let error">{{ error.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>Last Name</mat-label>
+      <input matInput type="text" name="lastName" formControlName="lastName">
+      <mat-error *dnng-errors-for="form!.controls.lastName; let error">{{ error.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>Nick Name</mat-label>
+      <input matInput type="text" name="nickName" formControlName="nickName">
+      <mat-error *dnng-errors-for="form!.controls.nickName; let error">{{ error.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>Address E-mail</mat-label>
+      <input matInput type="text" name="email" formControlName="email" inputmode="email" async-validation-on-blur>
+      <mat-error *dnng-errors-for="form!.controls.email; let error">{{ error.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>Your Gender</mat-label>
+      <mat-select formControlName="gender">
+        <mat-option value="male">Male</mat-option>
+        <mat-option value="female">Female</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>Choose your date of birth</mat-label>
+      <input type="text"
+             matInput
+             formControlName="dateOfBirth"
+             readonly
+             (focus)="openCalendar()">
+
+      <mat-error *dnng-errors-for="form!.controls.dateOfBirth; let error">{{ error.message }}</mat-error>
+    </mat-form-field>
+
+    <div class="calendar-overlay" *ngIf="calendarOpened" [@calendarContainer]>
+      <div class="calendar-backdrop" (click)="closeCalendar()"></div>
+      <div class="calendar-card bg-white mat-elevation-z4">
+        <mat-calendar (selectedChange)="onSelected($event)">
+        </mat-calendar>
+      </div>
+    </div>
+
+    <mat-form-field  class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>Password</mat-label>
+      <input matInput type="text" name="password" formControlName="password">
+      <mat-error *dnng-errors-for="form!.controls.password; let error">{{ error.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-form__regular" appearance="fill" color="accent">
+      <mat-label>Confirm password</mat-label>
+      <input matInput type="text" name="password" formControlName="confirmPassword">
+      <mat-error *dnng-errors-for="form!.controls.confirmPassword; let error">{{ error.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-form__last" appearance="fill" color="accent">
+      <mat-label>Write something about your self</mat-label>
+      <textarea matInput
+                name="aboutMySelf"
+                formControlName="aboutMySelf"
+                cdkTextareaAutosize
+                [cdkAutosizeMinRows]="10"
+                ></textarea>
+    </mat-form-field>
+
+  </div>
+
+  <div class="register-form__btn-group">
+    <button type="submit" mat-raised-button color="primary" [disabled]="disableSubmit">Register Account</button>
+    <a href="#" mat-raised-button color="warn">Cancel</a>
+  </div>
+
+</form>

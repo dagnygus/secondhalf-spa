@@ -1,0 +1,26 @@
+<ng-container *ngIf="!chatPending; else chatPendingTemplate">
+  <ng-container *ngIf="messages.length > 0; else emptyTemplate">
+
+    <div *ngFor="let message of messages"
+        class=" mat-elevation-z6"
+        [class.chat-dialog-clouds__cloud]="!isOwn(message)"
+        [class.chat-dialog-clouds__own-cloud]="isOwn(message)"
+        [class.bg-primary]="isOwn(message)"
+        [class.bg-accent]="!isOwn(message)">
+        <span class="chat-dialog-clouds__message-content"
+              [class.chat-dialog-clouds__own-message-content]="isOwn(message)">
+              {{ message.content }}
+        </span>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyTemplate>
+    <div class="chat-dialog-clouds__no-messages-container">
+      <span>Write your first message to <span class="color-primary">{{ memberNickName }}</span></span>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #chatPendingTemplate>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

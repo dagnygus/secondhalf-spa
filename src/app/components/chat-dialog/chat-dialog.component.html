@@ -1,0 +1,19 @@
+<div class="chat-dialog__header mat-elevation-z2">
+  <div class="chat-dialog__avatar-container">
+    <img [src]="imageUrl" alt="profile_picture" class="mat-elevation-z6">
+  </div>
+
+  <span class="chat-dialog__nickname color-primary">{{ memberNickName }}</span>
+
+  <button mat-button color="accent"
+          class="chat-dialog__close-btn"
+          (click)="onClose.next()"><mat-icon>close</mat-icon></button>
+</div>
+
+<app-chat-dialog-clouds [messages]="messages"
+                        [memberNickName]="memberNickName"
+                        appXOverflowScroll></app-chat-dialog-clouds>
+<app-chat-dialog-textbox-entry class="mat-elevation-z6"
+                               [(value)]="message"
+                               (send)="onSend()"
+                               [disabled]="sendingMessageDisabled || chatPending"></app-chat-dialog-textbox-entry>

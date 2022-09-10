@@ -1,0 +1,15 @@
+$list-of-gaps: 0, 2, 4, 8, 16, 24, 32, 48;
+
+@each $row-gap in $list-of-gaps {
+  @each $column-gap in $list-of-gaps {
+    @if $row-gap==$column-gap {
+      .gap-#{$column-gap} {
+        gap: #{$row-gap}px;
+      }
+    } @else {
+      .gap-#{$column-gap}-#{$row-gap} {
+        gap: #{row-gap}px #{$column-gap}px;
+      }
+    }
+  }
+}

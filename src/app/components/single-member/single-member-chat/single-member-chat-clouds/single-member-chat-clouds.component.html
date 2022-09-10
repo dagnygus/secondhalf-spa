@@ -1,0 +1,28 @@
+<!-- <div class="single-member-chat-clouds__container"
+     appMessagesContainer> -->
+  <ng-container *ngIf="!chatPending; else pendingTemplate">
+    <ng-container *ngIf="messages$ | async as messages">
+      <ng-template [ngIf]="messages.length > 0" [ngIfElse]="emptyTemplate">
+        <div *ngFor="let message of messages"
+           [class.single-member-chat-clouds__cloud]="!isOwn(message)"
+           [class.single-member-chat-clouds__own-cloud]="isOwn(message)"
+           [class.bg-gr-primary]="isOwn(message)"
+           [class.bg-gr-accent]="!isOwn(message)">
+           <span class="single-member-chat-clouds__message-content"
+                 [class.single-member-chat-clouds__own-message-content]="isOwn(message)">
+                 {{ message.content }}
+            </span>
+      </div>
+      </ng-template>
+      <ng-template #emptyTemplate>
+        <div class="signle-member-chat__no-messages-container">
+          <span>Write your first message to <span class="color-primary">{{ memberNickName }}</span></span>
+        </div>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+  <ng-template #pendingTemplate>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+
+<!-- </div> -->

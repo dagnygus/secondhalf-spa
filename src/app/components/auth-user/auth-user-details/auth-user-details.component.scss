@@ -1,0 +1,180 @@
+@use '../../../../mat-theme/abstract/math-abs' as mat;
+
+$breakpoint: 650px;
+
+:host {
+  display: grid;
+  padding: 16px 0;
+  justify-items: center;
+  align-items: center;
+  grid-auto-flow: row dense;
+  width: 100%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: $breakpoint) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+  }
+
+}
+
+.auth-user-details__avatar-and-form {
+  position: relative;
+  width: 85%;
+  padding: 16px;
+  box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 1);
+  border-radius: 16px;
+  max-width: 320px;
+  overflow: hidden;
+  @media (min-width: $breakpoint) {
+    grid-column: 1 / span 1;
+    align-self: start;
+    margin: 16px 0 0  16px;
+    justify-self: center;
+    transform: translateX(-16px);
+  }
+}
+
+app-user-detail {
+  justify-self: center;
+  width: 100%;
+  max-width: 430px;
+}
+
+.auth-user-details__avatar-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 1);
+  position: relative;
+}
+
+.auth-user-details__avatar-container::before {
+  content: '';
+  display: block;
+  float: left;
+  padding-bottom: 100%;
+}
+
+.auth-user-details__avatar {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  float: left;
+  object-fit: cover;
+  position: absolute;
+}
+
+button[mat-raised-button].avatar-btn {
+  box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 1) !important;
+}
+
+.box-shadow {
+  box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 1)
+}
+
+.user-details__label {
+  background-color: rgba(mat.$accent-color, .4);
+  button[mat-raised-button] {
+    min-width: 0 !important;
+    padding: 0 !important;
+    width: 50px !important;
+  }
+}
+
+.auth-user-details__loading-spinner-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > app-loading-spinner {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.user-details_info-container {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+}
+
+.user-details__label-content {
+  font-size: 20px;
+}
+
+.auth-user-details__details-container {
+  display: grid;
+  justify-self: stretch;
+
+  @media (min-width: $breakpoint) {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 3;
+    align-self: start;
+    margin-right: 16px;
+  }
+}
+
+.auth-user-details__checkbox-container {
+  @media (min-width: $breakpoint) {
+    grid-column: 1 / span 1;
+    align-self: start;
+    margin-top: 16px;
+    transform: translateX(-16px);
+  }
+}
+
+.bodoni {
+  font-family: 'Bodoni';
+  font-weight: 800;
+  font-style: italic;
+}
+
+.calendar-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  z-index: 10000;
+
+}
+
+.calendar-backdrop {
+  align-self: stretch;
+  justify-self: stretch;
+  background-color: rgba(0, 0, 0, .32);
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+}
+
+.calendar-card {
+  width: 95%;
+  justify-self: center;
+  align-self: center;
+  max-width: 400px;
+  border-radius: 8px;
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  z-index: 10;
+}
+
+app-address-info-form {
+  width: 100%;
+  max-width: 400px;
+
+  @media (min-width: $breakpoint) {
+    grid-column: 1 / span 1;
+    align-self: start;
+    justify-self: center;
+    padding: 0 16px;
+  }
+}

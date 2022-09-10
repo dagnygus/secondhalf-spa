@@ -1,0 +1,13 @@
+@mixin create-mat-backgrounds($primary, $accent, $warn) {
+  .bg-primary {
+    background-color: $primary;
+  }
+
+  .bg-accent {
+    background-color: $accent;
+  }
+
+  .bg-warn {
+    background-color: $warn;
+  }
+}

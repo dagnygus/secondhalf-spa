@@ -1,0 +1,62 @@
+:host {
+  display: grid;
+  gap: 32px;
+  padding: 32px 0;
+  width: 100%;
+  justify-self: center;
+  max-width: 1024px;
+}
+
+section {
+  width: 100%;
+  padding: 8px 16px 16px 16px;
+  background-color: white;
+  border-radius: 8px;
+  max-width: 770px;
+}
+
+section:nth-of-type(odd) {
+  justify-self: left;
+
+  .opinions__img {
+    float: left;
+    margin-right: 8px;
+  }
+
+  .opinions__paragraph {
+    text-align: left;
+  }
+}
+
+section:nth-of-type(even) {
+  justify-self: right;
+
+  .opinions__img {
+    float: right;
+    margin-left: 8px;
+  }
+
+  .opinions__paragraph {
+    text-align: right;
+  }
+}
+
+.opinions__heading {
+  font-size: clamp(24px, 6vw, 32px);
+  margin-top: 28px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.opinions__img {
+  object-fit: cover;
+  width: clamp(180px, 40vw, 230px);
+  height: clamp(180px, 40vw, 230px);
+  border-radius: 8px;
+}
+
+.opinions__paragraph {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: clamp(14px, 3vw, 18px);
+}

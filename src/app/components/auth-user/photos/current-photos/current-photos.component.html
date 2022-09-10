@@ -1,0 +1,5 @@
+<app-photo-modal [selectingMainImage$]="selectingMainImage$" [deleteImageSuccess$]="deleteImageSuccess$"></app-photo-modal>
+<div [@photo]="null" class="photo__photo-container" *ngFor="let url of imagesUrls; let i = index; trackBy: trackBy">
+  <app-photo  [imageUrl]="url"
+              [index]="i"></app-photo>
+</div>

@@ -1,0 +1,20 @@
+:host {
+  min-height: 80vh;
+  display: grid;
+  grid-auto-rows: auto;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+
+  @media (min-width: 580px) {
+    min-height: unset;
+    background-color: white;
+    padding: 8px;
+    gap: 8px;
+    width: 340px;
+    border-radius: 4px;
+    align-content: unset;
+    justify-items: unset;
+    max-height: 80vh;
+  }
+}

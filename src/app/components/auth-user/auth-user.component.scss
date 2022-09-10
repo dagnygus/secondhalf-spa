@@ -1,0 +1,23 @@
+// .auth-user__container {
+//   width: 100%;
+// }
+.auth-user__tab-nav {
+  width: 100vw;
+  min-width: 100%;
+}
+
+.auth-user__tab-subtitle {
+  font-size: 0.8em;
+}
+
+.auth-user__tab-link {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 185px;
+}
+
+.auth-user__outlet-container {
+  display: grid;
+  align-items: start;
+}

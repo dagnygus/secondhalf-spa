@@ -1,0 +1,4 @@
+<app-notification *ngFor="let notification of notifications; trackBy: trackBy; let i = index"
+                  [notification]="notification"
+                  class="mat-elevation-z6"
+                  (click)="onNotificationClick(notification.uid, i, notification.type)"></app-notification>

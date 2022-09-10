@@ -1,0 +1,43 @@
+@use '../../../../../mat-theme/abstract/math-abs' as mat;
+
+:host {
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  --image-aspect-ratio: 4 / 4;
+  --items-per-view: 4;
+  --column-gap: 0px;
+}
+
+:host::before {
+  content: '';
+  padding-bottom: calc(100% / (var(--items-per-view) * var(--image-aspect-ratio)) - var(--column-gap));
+}
+
+.single-member-photos-displayer__images-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.single-member-photos-displayer__image, .single-member-photos-displayer__frame {
+  width: calc(100% / var(--items-per-view) - var(--column-gap));
+  height: 100%;
+  position: absolute;
+}
+
+.single-member-photos-displayer__image {
+  object-fit: cover;
+}
+
+.single-member-photos-displayer__frame {
+  border: 2px solid mat.$accent-color;
+  pointer-events: none;
+  display: flex;
+  z-index: 20;
+  // transform: translateX(calc(var(--column-gap) / 2))
+}

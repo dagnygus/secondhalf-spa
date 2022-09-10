@@ -1,0 +1,19 @@
+
+<div class="row-center">
+  <div class="uniform-queue gap-4">
+    <ng-container *ngFor="let pageNumber of rangeArr" >
+      <a *ngIf="pageNumber <= edgeRange || pageNumber >= totalPages - edgeRange + 1 || (currentPage - pageNumber <= range &&
+                currentPage - pageNumber >=  -range) else elipsisContainer"
+         class="pagination__btn"
+         [class.active]="pageNumber === currentPage"
+         matRipple
+         routerLink="/members"
+         [queryParams]="{ page: pageNumber }">{{ pageNumber }}</a>
+
+      <ng-template #elipsisContainer>
+        <div *ngIf="pageNumber - currentPage === range + 1 ||
+                    currentPage - pageNumber ===  range + 1" class="btn btn-color-transparent pagination__elispis">...</div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

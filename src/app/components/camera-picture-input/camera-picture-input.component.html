@@ -1,0 +1,38 @@
+<div class="camera-picture-input__container row-center" *ngIf="showCanvas" @container>
+    <div class="camera-picture-input__canvas-container position-relative mat-elevation-z14"
+         #canvasContainer>
+      <canvas class="camera-picture-input__canvas  " #canvas></canvas>
+      <div class="column-center-stretch position-absolute w-100 h-100">
+
+        <div class="row-end-center margin-8">
+          <button mat-mini-fab color="warn" (click)="onExitButtonClick()">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </div>
+        <div class="row-center margin-top-auto margin-bottom-16 w-100 gap-16">
+          <ng-template [ngIf]="!pictureCatched" [ngIfElse]="catchedPictureTemplate">
+            <button mat-fab color="primary"
+                  (click)="makePicture()"
+                  *ngIf="!pictureCatched else catchedPictureTemplate">
+                  <mat-icon>photo_camera</mat-icon>
+            </button>
+          </ng-template>
+          <ng-template #catchedPictureTemplate>
+            <button mat-raised-button color="warn" (click)="onCancelButtonClick()">
+                    <mat-icon>cancel</mat-icon> Cancel
+            </button>
+            <button mat-raised-button color="primary" (click)="onAcceptButtonClick()">
+                    <mat-icon>add_a_photo</mat-icon> Accept
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="position-absolute camera-picture-input__ripple"
+           [@ripple]="rippleAnimationState"></div>
+
+    </div>
+</div>
+
+<ng-content></ng-content>
+

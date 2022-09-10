@@ -1,0 +1,21 @@
+<div #photoContainer
+     class="photo__container"
+     (click)="onPhotoClick()"
+     [style.visibility]="visibility">
+
+  <ng-template [ngIf]="isMain">
+    <div class="photo__is-main-label bg-primary mat-elevation-z6">
+      <span class="photo__span"><mat-icon class="color-accent">star</mat-icon> Main</span>
+    </div>
+
+    <div class="photo__border"></div>
+  </ng-template>
+
+  <img [appLazyImage]="imageUrl" [loadingView]="loadingView" class="photo__photo">
+
+  <ng-template appLazyImageLoadingView #loadingView="appLazyImageLoadingView">
+    <app-loading-spinner class="photo__loading-spinner"></app-loading-spinner>
+  </ng-template>
+
+
+</div>

@@ -1,0 +1,12 @@
+:host {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  width: 100%;
+  // flex-direction: column;
+}
+
+
+.single-member-chat__unauth-container {
+  min-height: 80vh;
+}
+

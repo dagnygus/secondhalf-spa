@@ -1,0 +1,109 @@
+$list-of-items-align: start, center, end, stretch;
+$map-of-content-align: (
+  start: start,
+  center: center,
+  end: end,
+  stretch: stretch,
+  sa: space-around,
+  sb: space-between,
+  se: space-evenly,
+);
+
+.grid, .stack, .queue, .uniform-stack, .uniform-queue {
+  display: grid;
+}
+
+.queue, .uniform-queue {
+  grid-auto-flow: column;
+}
+
+.uniform-stack {
+  grid-auto-rows: 1fr;
+}
+
+.uniform-queue {
+  grid-auto-columns: 1fr;
+}
+
+@each $main in $list-of-items-align {
+  @each $cross in $list-of-items-align {
+
+    @if $main==$cross {
+      .items-#{$main} {
+        justify-items: #{$main};
+        align-items: #{$cross};
+      }
+    } @else {
+      .items-#{$main}-#{$cross} {
+        justify-items: #{$main};
+        align-items: #{$cross};
+      }
+    }
+
+  }
+}
+
+@each $value in $list-of-items-align {
+  .items-x-#{$value} {
+    justify-items: #{$value};
+  }
+
+  .items-y-#{value} {
+    align-items: #{$value};
+  }
+}
+
+
+
+@each $main-key, $main-value in $map-of-content-align {
+  @each $cross-key, $cross-value in $map-of-content-align {
+    @if $main-key==$cross-key {
+      .content-#{$main-key} {
+        justify-content: #{$main-value};
+        align-content: #{$cross-value};
+      }
+    } @else {
+      .content-#{$main-key}-#{$cross-key} {
+        justify-content: #{$main-value};
+        align-content: #{$cross-value};
+      }
+    }
+  }
+}
+
+@each $key, $value in $map-of-content-align {
+  .content-x-#{$key} {
+    justify-content: #{$value};
+  }
+
+  .content-y-#{$key} {
+    align-content: #{$value};
+  }
+}
+
+@each $main in $list-of-items-align {
+  @each $cross in $list-of-items-align {
+
+    @if $main==$cross {
+      .item-#{$main} {
+        justify-self: #{$main};
+        align-self: #{$cross};
+      }
+    } @else {
+      .item-#{$main}-#{$cross} {
+        justify-self: #{$main};
+        align-self: #{$cross};
+      }
+    }
+
+  }
+}
+
+@each $value in $list-of-items-align {
+  .item-x-#{$value} {
+    justify-self: #{$value};
+  }
+  .item-y-#{$value} {
+    align-self: #{$value};
+  }
+}

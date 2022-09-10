@@ -1,0 +1,74 @@
+$list-of-values-for-margins: 0, 2, 4, 8, 16, 24, 32, 48, auto;
+$list-of-values-for-padding: 0, 2, 4, 8, 16, 24 ,32, 48;
+
+@function get-correct-value($value) {
+  @if $value==auto {
+    @return auto;
+  } @else {
+    @return #{$value}#{'px'};
+  }
+}
+
+.margin-clear {
+  margin: 0;
+}
+
+.padding-clear {
+  padding: 0;
+}
+
+@each $margin in $list-of-values-for-margins {
+  .margin-#{$margin} {
+    margin: get-correct-value($margin) !important;
+  }
+  .margin-x-#{$margin} {
+    margin-right: get-correct-value($margin) !important;
+    margin-left: get-correct-value($margin) !important;
+  }
+  .margin-y-#{$margin} {
+    margin-top: get-correct-value($margin) !important;
+    margin-bottom: get-correct-value($margin) !important;
+  }
+  .margin-top-#{$margin} {
+    margin-top: get-correct-value($margin) !important;
+  }
+
+  .margin-bottom-#{$margin} {
+    margin-bottom: get-correct-value($margin) !important;
+  }
+
+  .margin-right-#{$margin} {
+    margin-right: get-correct-value($margin) !important;
+  }
+
+  .margin-left-#{$margin} {
+    margin-left: get-correct-value($margin) !important;
+  }
+
+}
+
+@each $padding in $list-of-values-for-padding {
+  .padding-#{$padding} {
+    padding: #{$padding}px !important;
+  }
+  .padding-x-#{$padding} {
+    padding-left: #{$padding}px !important;
+    padding-right: #{$padding}px !important;
+  }
+  .padding-y-#{$padding} {
+    padding-top: #{$padding}px !important;
+    padding-bottom: #{$padding}px !important;
+  }
+  .padding-top-#{$padding} {
+    padding-top: #{$padding}px !important;
+  }
+  .padding-bottom-#{$padding} {
+    padding-bottom: #{$padding}px !important;
+  }
+  .padding-right-#{$padding} {
+    padding-right: #{$padding}px !important;
+  }
+  .padding-left-#{$padding} {
+    padding-left: #{$padding}px !important;
+  }
+}

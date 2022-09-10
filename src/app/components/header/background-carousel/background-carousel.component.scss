@@ -1,0 +1,29 @@
+:host {
+  display: block
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+[class^="carousel-image"] {
+  position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+}
+
+@for $i from 1 to 8 {
+  .carousel-image-0#{$i} {
+    background: url(/assets/front_end_images/carousel_image_0#{$i}.jpg) center/cover no-repeat border-box;
+  }
+}
+
+.carousel-show-image {
+  opacity: 1;
+}

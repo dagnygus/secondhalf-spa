@@ -1,0 +1,47 @@
+<ng-container [ngSwitch]="membersStatus">
+
+    <ng-template ngSwitchCase="complete">
+
+      <app-local-collection class="members__container">
+        <div class="members__item" *localFor="let member of members; trackBy: trackBy; let i = index;">
+          <app-member
+                      class="mat-elevation-z6"
+                      [member]="member"
+                      [index]="i"
+                      [isAuth$]="isAuth$"
+                      [likeStart$]="likeStart$"
+                      [likeEnd$]="likeEnd$"
+                      (like)="onLike(i)"></app-member>
+        </div>
+      </app-local-collection>
+
+    </ng-template>
+
+    <ng-template ngSwitchCase="pending">
+
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+      <div class="members__item"><app-member-placeholder></app-member-placeholder></div>
+
+    </ng-template>
+
+    <ng-template ngSwitchCase="error">
+      <div class="members__error-message-container row-center text-center padding-x-16">
+        <p>An error has accoure on servere. Please revisit this side later</p>
+      </div>
+    </ng-template>
+
+</ng-container>
+<app-pagination *ngIf="totalPages > 0"
+                [totalPages]="totalPages"
+                [currentPage]="currentPage"
+                [range]="1 | media: { '520': 2 }"
+                [edgeRange]="1 | media: { '410': 2 }"
+                class="margin-top-32"></app-pagination>

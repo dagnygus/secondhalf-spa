@@ -1,0 +1,23 @@
+<ng-container *ngIf="isAuth; else unauthTemplate">
+  <app-single-member-chat-clouds [messages$]="chatMessages$"
+                                 [memberNickName]="memberNickName"
+                                 [chatPending]="(chatPending$ | async) ?? false"
+                                 appXOverflowScroll
+                                 class="mat-elevation-z6"></app-single-member-chat-clouds>
+  <app-single-member-chat-textbox-entry [(value)]="message"
+                                        (send)="onSendHandler()"
+                                        [disabled]="(sendingMessagesDisabled$ | async)"
+                                        class="mat-elevation-z6"></app-single-member-chat-textbox-entry>
+</ng-container>
+
+<ng-template #unauthTemplate>
+  <div class="single-member-chat__unauth-container column-center gap-16 w-100 ">
+    <p class="text-center padding-x-16">
+      You neet to be register to communicate with our member.
+    </p>
+    <div class="uniform-queue content-center gap-4">
+      <a routerLink="/signin" mat-raised-button color="primary">Login</a>
+      <a routerLink="/signup" mat-raised-button color="primary">Register</a>
+    </div>
+  </div>
+</ng-template>

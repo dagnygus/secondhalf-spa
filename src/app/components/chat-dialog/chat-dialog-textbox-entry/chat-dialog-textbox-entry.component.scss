@@ -1,0 +1,28 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3px;
+  padding: 4px;
+}
+
+.chat-dialog-textbox__input {
+  display: block;
+  padding: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #efefef;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  min-height: 0;
+  max-height: 100%;
+  border-radius: 8px;
+  display: block;
+
+
+  &:disabled {
+    border-color: #dedede;
+    background-color: #efefef;
+  }
+}
