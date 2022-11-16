@@ -26,6 +26,13 @@ export interface AppState {
   image: ImageState;
 }
 
+export const appRootReducers = {
+  auth: authReducer,
+  notification: notificationReducer,
+  chat: chatReducer,
+  image: imageReducer
+};
+
 export const appReducers = {
   auth: authReducer,
   members: membersReducer,
@@ -41,7 +48,14 @@ export const effects = [
   MemberEffects,
   ChatEffects,
   NotificationEffects,
-  ImageEffects
+  ImageEffects,
+  NotificationEffects
+];
+
+export const rootEffects = [
+  AuthEffects,
+  ChatEffects,
+  NotificationEffects
 ];
 
 export type StateStatus = 'empty' | 'pending' | 'complete' | 'error';

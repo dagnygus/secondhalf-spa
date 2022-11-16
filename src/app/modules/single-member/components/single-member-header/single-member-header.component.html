@@ -1,0 +1,37 @@
+<button *ngIf="isAuth"
+          mat-raised-button color="accent"
+          class="ingle-member-header__like-btn"
+          (click)="onLikedBtnClickHandler()"
+          [class.single-member-header__like-btn-confirmed]="member.liked"
+          [class.single-member-header__box-shadow-none]="member.liked || likePending"
+          [disableRipple]="member.liked || likePending">
+  <mat-icon *ngIf="likePending" class="single-member-header__like-loading-indicator">refresh</mat-icon>
+  <mat-icon>thumb_up</mat-icon> {{ member.liked | like: member.gender }}</button>
+
+  <div class="single-member-header__image-container">
+    <img [appLazyImage]="member.mainPhotoUrl | mainImageUrl"
+          [alt]="member.firstName + '_' + member.lastName + '_avatar'"
+          class="mat-elevation-z8"
+          [id]="'header__' + member.userId"
+          #image
+          [appHero]="member.userId"
+          appHeroEasing="ease-in-out"
+          appHeroDuration="600"
+          [elementToHide]="image"
+          [appHeroStyles]="{ borderRadius: '50%', objectFit: 'cover' }">
+    <button *mediaIf="580; and isAuth"
+            mat-raised-button
+            color="primary"
+            (click)="onChatBtnClick()"><mat-icon>chat</mat-icon> Chat with {{ member.gender === 'male' ? 'him' : 'her' }}</button>
+  </div>
+
+  <div class="single-member-header__name-container">
+    <div class="single-member-header__name-inner-container mat-elevation-z8">
+      <div>
+        <span class="single-member-header__nick-name">{{ member.nickName }}</span>
+      </div>
+      <div>
+        <span>{{ member.firstName }} {{ member.lastName }}</span>
+      </div>
+    </div>
+  </div>

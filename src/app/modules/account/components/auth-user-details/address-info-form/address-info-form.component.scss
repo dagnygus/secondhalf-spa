@@ -1,0 +1,12 @@
+.address-info-form__form {
+  display: grid;
+  width: 100%;
+  justify-self: center;
+}
+
+.address-info-form__btn-group {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  margin: 16px 0;
+}

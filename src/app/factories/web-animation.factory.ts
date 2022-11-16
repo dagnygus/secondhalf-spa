@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { isPlatformBrowser } from '@angular/common';
-import { ElementRef, forwardRef, Inject, Injectable, Injector, NgZone, PLATFORM_ID, Provider } from '@angular/core';
+import { ElementRef, forwardRef, Injectable, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { UnstableSubject } from '../utils/subjects';
-
-declare const ngDevMode: any;
 
 export interface Mover {
 
@@ -13,6 +10,7 @@ export interface Mover {
   readonly onDoneUnstable: Observable<void>;
   readonly onCancelStable: Observable<void>;
   readonly onCancelUnstable: Observable<void>;
+
   get isActive(): boolean;
 
   fromTo(from: MovingState, to: MovingState, duration: number): void;
@@ -40,20 +38,14 @@ export interface MovingOptions {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 class _MoverImpl implements Mover {
 
-  private _animation: Animation | null = null;
-  private _onDoneStable = new Subject<void>();
-  private _onDoneUnstable = new UnstableSubject<void>(this._ngZone);
-  private _onCancelStable = new Subject<void>();
-  private _onCancelUnstable = new UnstableSubject<void>(this._ngZone);
-
   private _styleToRemove: string[] | null = null;
+  private _animation: Animation | null = null;
+  onDoneStable = new Subject<void>();
+  onDoneUnstable = new UnstableSubject<void>(this._ngZone);
+  onCancelStable = new Subject<void>();
+  onCancelUnstable = new UnstableSubject<void>(this._ngZone);
 
-  readonly onDoneStable = this._onDoneStable.asObservable();
-  readonly onDoneUnstable = this._onDoneUnstable.asObservable();
-  readonly onCancelStable = this._onCancelStable.asObservable();
-  readonly onCancelUnstable = this._onCancelUnstable.asObservable();
-
-  get isActive(): boolean { return !!this._animation; }
+  get isActive(): boolean { return this._animation != null; }
 
   constructor(private readonly _element: Element,
               private readonly _ngZone: NgZone) {}
@@ -63,20 +55,15 @@ class _MoverImpl implements Mover {
   fromTo(from: MovingState, to: MovingState, config: MovingOptions): void;
   fromTo(from: MovingState, to: MovingState, configOrDuration: any): void {
     if (typeof this._element.animate !== 'function') { return; }
-
-    const config = this._getConfig(configOrDuration);
     this._dipsoseCurrentAnimations();
-
     from = this._coerceTransitionState(from);
     to = this._coerceTransitionState(to, true);
-
+    const config = this._getConfig(configOrDuration);
     this._animation = this._element.animate([from, to], config);
     this._animation.pause();
-
     this._ngZone.runOutsideAngular(() => {
       this._animation!.onfinish = () => this._onFinishHanler(this._animation);
     });
-
     this._animation.play();
   }
 
@@ -84,21 +71,15 @@ class _MoverImpl implements Mover {
   // eslint-disable-next-line @typescript-eslint/unified-signatures
   to(to: MovingState, configOrDuration: MovingOptions): void;
   to(to: MovingState, configOrDuration: any): void {
-
     if (typeof this._element.animate !== 'function') { return; }
-
-    const config = this._getConfig(configOrDuration);
     this._dipsoseCurrentAnimations();
-
     to = this._coerceTransitionState(to, true);
-
+    const config = this._getConfig(configOrDuration);
     this._animation = this._element.animate(to, config);
     this._animation.pause();
-
     this._ngZone.runOutsideAngular(() => {
       this._animation!.onfinish = () => this._onFinishHanler(this._animation);
     });
-
     this._animation.play();
   }
 
@@ -159,13 +140,13 @@ class _MoverImpl implements Mover {
   }
 
   private _riseOnDone(): void {
-    this._onDoneStable.next();
-    this._onDoneUnstable.next();
+    this.onDoneStable.next();
+    this.onDoneUnstable.next();
   }
 
   private _riseOnCancel(): void {
-    this._onCancelStable.next();
-    this._onCancelUnstable.next();
+    this.onCancelStable.next();
+    this.onCancelUnstable.next();
   }
 
   private _dipsoseCurrentAnimations(): void {
@@ -185,7 +166,8 @@ class _MoverImpl implements Mover {
 
   private _coerceTransitionState(state: MovingState, isLast = false): MovingState {
 
-    if (!this._hasStyleProp(this._element)) { return state; }
+    const element = this._element;
+    if (!this._hasStyleProp(element)) { return state; }
 
     const propsToRetrive: string[] = [];
 
@@ -198,24 +180,18 @@ class _MoverImpl implements Mover {
     const newState = { ...state } as any;
 
     const currentPropsValues = {} as any;
-    const currentComputetStyle = getComputedStyle(this._element);
+    const currentComputetStyle = getComputedStyle(element) as any;
 
     propsToRetrive.forEach((prop) => {
-      currentPropsValues[prop] = (currentComputetStyle as any)[prop];
+      currentPropsValues[prop] = currentComputetStyle[prop];
+      element.style[prop] = '';
     });
 
-    propsToRetrive.forEach((prop) => {
-      (this._element as any).style[prop] = '';
-    });
-
-    const newComputedStyle = getComputedStyle(this._element);
+    const newComputedStyle = getComputedStyle(element) as any;
 
     propsToRetrive.forEach((prop) => {
-      newState[prop] = (newComputedStyle as any)[prop];
-    });
-
-    propsToRetrive.forEach((prop) => {
-      (this._element as any).style[prop] = currentPropsValues[prop];
+      newState[prop] = newComputedStyle[prop];
+      element.style[prop] = currentPropsValues[prop];
     });
 
     if (isLast) {
@@ -228,25 +204,6 @@ class _MoverImpl implements Mover {
   private _hasStyleProp(element: any): element is { style: { [key: string]: string } } {
     return typeof element.style === 'object';
   }
-
-}
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-class _SsrMoverImpl implements Mover {
-  onDoneStable = new Observable<void>();
-  onDoneUnstable = new Observable<void>();
-  onCancelStable = new Observable<void>();
-  onCancelUnstable = new Observable<void>();
-  get isActive(): boolean { return false; }
-  fromTo(from: MovingState, to: MovingState, duration: number): void;
-  // eslint-disable-next-line @typescript-eslint/unified-signatures
-  fromTo(from: MovingState, to: MovingState, config: MovingOptions): void;
-  fromTo(_: any, _1: any, _2: any): void { }
-  to(to: MovingState, duration: number): void;
-  // eslint-disable-next-line @typescript-eslint/unified-signatures
-  to(to: MovingState, config: MovingOptions): void;
-  to(_: any, _1: any): void { }
-  cancel(_?: boolean): void {}
 
 }
 
@@ -264,7 +221,7 @@ class _MovementFactoryImpl extends MovementFactory {
 
   constructor(private readonly _ngZone: NgZone) { super(); }
 
-  createFor(target: ElementRef<HTMLElement> | Element): Mover {
+  createFor(target: ElementRef<Element> | Element): Mover {
 
       let element: any;
 
@@ -278,24 +235,3 @@ class _MovementFactoryImpl extends MovementFactory {
 
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-// interface _MovementFactoryFn {
-//   (ngZone: NgZone, platformId: object): MovementFactory;
-//   singletonInstance?: MovementFactory;
-// }
-
-
-// const _movementFactoryFn: _MovementFactoryFn = (ngZone, platformId) => {
-
-//   if (_movementFactoryFn.singletonInstance == null) {
-//     _movementFactoryFn.singletonInstance = new _MovementFactoryImpl(ngZone, platformId);
-//   }
-//   return _movementFactoryFn.singletonInstance;
-// };
-
-// export const movementFactoryProvider: Provider = {
-//   provide: MovementFactory,
-//   useFactory: _movementFactoryFn,
-//   deps: [NgZone, PLATFORM_ID],
-// };

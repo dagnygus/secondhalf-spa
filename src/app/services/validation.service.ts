@@ -1,14 +1,13 @@
 import { AppState } from 'src/app/app.ngrx.utils';
-import { environment } from './../../environments/environment';
 import { of } from 'rxjs';
 import { AsyncValidatorFn } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Destroyable } from '../my-package/core/destroyable';
 import { Injectable, OnDestroy } from '@angular/core';
-import { delay, tap, map, distinctUntilChanged, } from 'rxjs/operators';
+import {  tap, map, distinctUntilChanged, } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { AuthModel } from '../models/auth-model';
-import { AUTH_URL, EMAIL_IS_NOT_IN_USE_URL } from '../utils/constans';
+import { EMAIL_IS_NOT_IN_USE_URL } from '../utils/constans';
 
 const EMAIL_ASYNC_VALIDATION_ERRORS = { emailAsync: { message: 'This address email is allready in use!' } };
 const HAS_EMAIL_ASYNC_VALIDATION_ERRORS = { hasEmailAsyc: { message: 'This address e-mail is not Registered in our application' } };
@@ -66,7 +65,6 @@ export class AsyncValidationService extends Destroyable implements OnDestroy {
 
       return this._httpClient.post<boolean>(EMAIL_IS_NOT_IN_USE_URL, { email: control.value }).pipe(
         map(value => value ? null : EMAIL_ASYNC_VALIDATION_ERRORS),
-        delay(environment.requestDelayTiming),
         tap(() => {
           control.markAsTouched();
           control.markAsDirty();

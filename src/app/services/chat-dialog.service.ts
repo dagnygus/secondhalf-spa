@@ -3,7 +3,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
-import { ChatDialogComponent } from '../components/chat-dialog/chat-dialog.component';
+import { ChatDialogComponent } from '../modules/shared/components/chat-dialog/chat-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class ChatDialogService {

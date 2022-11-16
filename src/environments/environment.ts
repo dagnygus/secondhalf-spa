@@ -5,7 +5,6 @@
 export const environment = {
   // baseUrl: 'http://192.168.8.107:3000/',
   baseUrl: 'http://localhost:5001/secondhalf-92707/us-central1/api/',
-  requestDelayTiming: 2000,
   production: false,
   portaitPlaceholderUrl: '/assets/front_end_images/portrait_placeholder.svg',
   firebase: {

@@ -31,11 +31,11 @@ export class MembersEffects {
     ofType(getMembersStart),
     exhaustMap(({ page, limit, gender }) => {
 
-      const currentMembersState = this._stateSnapshotService.getMembersState();
+      const currentMembersState = this._stateSnapshotService.getMembersState()!;
 
       if (currentMembersState.page === page &&
-          currentMembersState.limit === limit) {
-        console.log('allready');
+          currentMembersState.limit === limit &&
+          currentMembersState.gender === gender) {
         return of(getMembersSuccess({ newState: currentMembersState }));
       }
 
@@ -43,7 +43,7 @@ export class MembersEffects {
       let requestUrl = `${USER_URL}?offset=${offset}&limit=${limit}`;
 
       if (gender != null) {
-        requestUrl += `?gender=${gender}`;
+        requestUrl += `&gender=${gender}`;
       }
 
       return this._httpClient.get<MemberModel[]>(requestUrl, { observe: 'response' }).pipe(
@@ -71,7 +71,7 @@ export class MembersEffects {
     exhaustMap((action) => {
 
       const currentAuthState = this._stateSnapshotService.getAuthState();
-      const currentMembersState = this._stateSnapshotService.getMembersState();
+      const currentMembersState = this._stateSnapshotService.getMembersState()!;
       const memberToUpdate = currentMembersState.members.entities[currentMembersState.members.ids[action.index]]!;
 
       const body = {
@@ -96,6 +96,8 @@ export class MembersEffects {
             this._store.dispatch(likeMemberFromMembersPageSuccess({ newState}));
 
             const currentMemberState = this._stateSnapshotService.getMemberState();
+
+            if (currentMemberState == null) { return; }
 
             if (!currentMemberState.member ||
               currentMemberState.member.userId === memberToUpdate.userId) { return; }
@@ -138,7 +140,7 @@ export class MembersEffects {
       return merge(...collectionChangesArr).pipe(
         tap((changes) => {
           let currentSelectedMemberDataToUpate: FsUserModel | undefined;
-          const currentMember = this._stateSnapshotService.getMemberState().member;
+          const currentMember = this._stateSnapshotService.getMemberState()?.member;
 
           const updatates = changes.map((change) => {
 
@@ -150,7 +152,7 @@ export class MembersEffects {
 
             return { id: change.doc.id, changes: fsUpadatedUser };
           });
-          const currentState = this._stateSnapshotService.getMembersState();
+          const currentState = this._stateSnapshotService.getMembersState()!;
           const members = membersAdapter.updateMany(updatates, currentState.members as any);
           const newState: MembersState = { ...currentState, members };
 

@@ -35,8 +35,6 @@ export class ImageEffects {
   getMembersImages$ = createEffect(() => this._actions$.pipe(
     ofType(getImagesForMemberStart),
     exhaustMap(({ userId }) => {
-
-
       const currentImageState = this._stateSnapshotService.getImageState();
       if (currentImageState.userId === userId) {
         return of(getImagesForMemberSuccess({

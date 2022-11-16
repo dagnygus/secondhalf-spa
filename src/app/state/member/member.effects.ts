@@ -32,14 +32,13 @@ export class MemberEffects {
   getMember$ = createEffect(() => this._actions$.pipe(
     ofType(getMemberStart),
     exhaustMap(({ id }) => {
-      const currentState = this._stateSnapshotService.getMemberState();
+      const currentState = this._stateSnapshotService.getMemberState()!;
 
       if (currentState.member && currentState.member.userId === id) {
         return of(getMemberSuccess({ newState: currentState }));
       }
 
-
-      const memberOrUndefined = this._stateSnapshotService.getMembersState().members.entities[id];
+      const memberOrUndefined = this._stateSnapshotService.getMembersState()?.members.entities[id];
 
       if (memberOrUndefined) {
         const newState: MemberState = {
@@ -77,7 +76,7 @@ export class MemberEffects {
       return collectionChanges(userQuery, { events: [ 'modified' ] }).pipe(
         tap((changes) => {
           const data = changes[0].doc.data();
-          const currentState = this._stateSnapshotService.getMemberState();
+          const currentState = this._stateSnapshotService.getMemberState()!;
           const newState: MemberState = {
             member: {
               ...data,
@@ -88,9 +87,9 @@ export class MemberEffects {
           this._store.dispatch(updateMemberState({ newState }));
 
           const currentMembersState = this._stateSnapshotService.getMembersState();
-          const dataInMembersState = currentMembersState.members.entities[data.userId];
+          const dataInMembersState = currentMembersState?.members.entities[data.userId];
 
-          if (!dataInMembersState) { return; }
+          if (currentMembersState == null || dataInMembersState == null) { return; }
 
           const newMembersState: MembersState = {
             ...currentMembersState,
@@ -119,7 +118,7 @@ export class MemberEffects {
       return this._httpClient.post<void>(LIKE_URL, body).pipe(
         tap({
           next: () => {
-            const currentState = this._stateSnapshotService.getMemberState();
+            const currentState = this._stateSnapshotService.getMemberState()!;
             const newState: MemberState = {
               member: {
                 ...currentState.member!,
@@ -130,6 +129,8 @@ export class MemberEffects {
             this._store.dispatch(likeMemberFromMemberPageSuccess({ newState }));
 
             const currentMembersState = this._stateSnapshotService.getMembersState();
+
+            if (currentMembersState == null) { return; }
 
             const memberInMembersState = currentMembersState.members.entities[id];
 

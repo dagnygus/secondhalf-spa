@@ -1,62 +1,74 @@
-import { ProductsComponent } from './components/products/products.component';
-import { SafetyAndPolicyComponent } from './components/safety-and-policy/safety-and-policy.component';
-import { SafetyTipsComponent } from './components/safety-tips/safety-tips.component';
-import { CommunityGuidelinesComponent } from './components/community-guidelines/community-guidelines.component';
-import { IntellectualPropertyComponent } from './components/intelectual-property/intellectual-property.component';
-import { CookiePolicyComponent } from './components/cookie-policy/cookie-policy.component';
-import { TermsComponent } from './components/terms/terms.component';
-import { PrivacyComponent } from './components/privacy/privacy.component';
-import { OpinionsComponent } from './components/opinions/opinions.component';
-import { AboutComponent } from './components/about/about.component';
-import { SignInGuard } from './guards/sign-in.guard';
-import { SingleMemberComponent } from './components/single-member/single-member.component';
-import { PhotosComponent } from './components/auth-user/photos/photos.component';
-import { NewPasswordComponent } from './components/auth-user/new-password/new-password.component';
-import { AuthUserDetailsComponent } from './components/auth-user/auth-user-details/auth-user-details.component';
-import { AuthUserComponent } from './components/auth-user/auth-user.component';
+import { NotificationsComponent } from './modules/notifications/components/notifications/notifications.component';
+import { SingleMemberGuard } from 'src/app/guards/single-member.guard';
+import { SignInGuard } from 'src/app/guards/sign-in.guard';
 import { UnauthGourd } from './guards/unauth.guard';
-import { AuthGuard } from './guards/auth.guard';
-import { SignInFormComponent } from './components/sign-in-form/sign-in-form.component';
-import { AuthFormComponent } from './components/auth-form/auth-form.component';
-import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { MembersComponent } from './components/members/members.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
-import { SingleMemberGuard } from './guards/single-member.guard';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+import { HomeComponent } from './modules/core/components/home/home.component';
+import { NotFoundComponent } from './modules/core/components/404/not-found.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent, },
-  { path: 'signup', component: AuthFormComponent, canActivate: [UnauthGourd] },
-  { path: 'signin', component: SignInFormComponent, canActivate: [UnauthGourd, SignInGuard] },
-  { path: 'members', component: MembersComponent, },
-  { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
   {
-    path: 'account',
-    component: AuthUserComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    children: [
-      { path: 'details', component: AuthUserDetailsComponent },
-      { path: 'newpassword', component: NewPasswordComponent },
-      { path: 'photos', component: PhotosComponent }
-    ]
+    path: '',
+    pathMatch: 'full',
+    component: HomeComponent
   },
-  { path: 'member/:id', component: SingleMemberComponent, canActivate: [SingleMemberGuard] },
-  { path: 'about', component: AboutComponent },
-  { path: 'opinions', component: OpinionsComponent },
-  { path: 'privacy', component: PrivacyComponent },
-  { path: 'terms', component: TermsComponent },
-  { path: 'cookie-policy', component: CookiePolicyComponent },
-  { path: 'intellectual-property', component: IntellectualPropertyComponent },
-  { path: 'community-guidelines', component: CommunityGuidelinesComponent },
-  { path: 'safety-tips', component: SafetyTipsComponent },
-  { path: 'safety-and-policy', component: SafetyAndPolicyComponent },
-  { path: 'products', component: ProductsComponent },
+  { path: 'account',
+    loadChildren: () => import('./modules/account/account.module').then((m) => m.AccountModule),
+    canLoad: [ AuthGuard ]
+  },
+  { path: 'about',
+    loadChildren: () => import('./modules/about/about.module').then((m) => m.AboutModule),
+  },
+  { path: 'community-guidelines',
+    loadChildren: () => import('./modules/community-guidelines/community-guidelines.module').then((m) => m.CommunityGuidelinesModule),
+  },
+  { path: 'cookie-policy',
+    loadChildren: () => import('./modules/cookie-policy/cookie-policy.module').then((m) => m.CookiePolicyModule),
+  },
+  { path: 'intellectual-property',
+    loadChildren: () => import('./modules/intellectual-property/intellectual-property.module').then((m) => m.IntellectualPropertyModule),
+  },
+  { path: 'members',
+    loadChildren: () => import('./modules/members/members.module').then((m) => m.MembersModule),
+  },
+  { path: 'notifications',
+    component: NotificationsComponent,
+    canActivate: [ AuthGuard ]
+  },
+  { path: 'opinions',
+    loadChildren: () => import('./modules/opinions/opinions.module').then((m) => m.OpinionsModule)
+  },
+  { path: 'privacy',
+    loadChildren: () => import('./modules/privacy/privacy.module').then((m) => m.PrivacyModule),
+  },
+  { path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then((m) => m.ProductsModule),
+  },
+  { path: 'safety-and-policy',
+    loadChildren: () => import('./modules/safety-and-policy/safety-and-policy.module').then((m) => m.SafetyAndPolicyModule),
+  },
+  { path: 'safety-tips',
+    loadChildren: () => import('./modules/safety-tips/safety-tips.module').then((m) => m.SafetyTipsModule),
+  },
+  { path: 'signin',
+    loadChildren: () => import('./modules/sign-in/sign-in.module').then((m) => m.SignInModule),
+    canLoad: [ UnauthGourd, SignInGuard ]
+  },
+  { path: 'signup',
+    loadChildren: () => import('./modules/sign-up/sign-up.module').then((m) => m.SignUpModule),
+    canLoad: [ UnauthGourd ]
+  },
+  { path: 'member/:id',
+    loadChildren: () => import('./modules/single-member/single-member.module').then((m) => m.SingleMemberModule),
+    canLoad: [ SingleMemberGuard ]
+  },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

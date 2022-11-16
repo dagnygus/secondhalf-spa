@@ -1,0 +1,66 @@
+<div class="header__banner" scrollTargetId="header">
+  <app-background-carousel class="header__big-carousel" @carousel1></app-background-carousel>
+  <app-dynamic-background class="header__big-carousel"></app-dynamic-background>
+  <app-background-carousel class="header__small-carousel" @carousel2></app-background-carousel>
+  <div class="header__grid">
+    <h1 class="header__title" [@title]>Find your second half right now</h1>
+    <ng-container *ngIf="viewportWidthOver580px; else smallViewTmpl">
+      <app-header-sign-in-form *ngIf="!isAuth; else unauthTmpl" [@authForm]="outlineAnimationState"></app-header-sign-in-form>
+    </ng-container>
+    <ng-template #smallViewTmpl>
+      <div class="header__btn-group" *ngIf="!isAuth; else unauthTmpl">
+        <a routerLink="/signin"
+            mat-raised-button
+            color="accent"
+            class=" padding-y-8 mat-elevation-z8 register-button clickable"
+            @loginBtn>
+          <mat-icon>
+            login
+          </mat-icon> Login
+        </a>
+        <a routerLink="/signup"
+            mat-raised-button
+            color="accent"
+            class=" padding-y-8 mat-elevation-z8 clickable login-button"
+            @registerBtn>
+          <mat-icon>
+            <span class="material-icons-outlined">
+              person_add
+            </span>
+          </mat-icon>
+          Register
+        </a>
+      </div>
+    </ng-template>
+    <ng-template #unauthTmpl>
+        <div class="header__auth-item">
+          <div class="header__avatar-box">
+            <img [appLazyImage]="avatarUrl | mainImageUrl"
+                 alt="avatar_image"
+                 class="header__avatar-img mat-elevation-z6"
+                 [loadingView]="imgLoadingTmpl">
+              <ng-template appLazyImageLoadingView #imgLoadingTmpl="appLazyImageLoadingView">
+                <div class="header__img-loading-spinner-wrapper mat-elevation-z6">
+                  <app-loading-spinner class="header__img-loading-spinner"></app-loading-spinner>
+                </div>
+              </ng-template>
+          </div>
+          <button mat-raised-button
+                  @logoutBtn
+                  color="warn"
+                  (click)="logout()"><mat-icon>logout</mat-icon>Logout</button>
+          <a routerLink="/account/details"
+             mat-raised-button color="primary"
+             @accountBtn><mat-icon>person</mat-icon>Account</a>
+        </div>
+    </ng-template>
+  </div>
+</div>
+
+<app-navbar scrollTargetId="nav"
+            globalScrollNavigationTarget
+            (navSignIn)="onNavSignIn()"
+            (navSignOut)="logout()"
+            [notificationCount]="notificationCount"
+            [isAuth]="isAuth"
+            #navbar></app-navbar>

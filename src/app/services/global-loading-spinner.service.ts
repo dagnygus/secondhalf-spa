@@ -1,4 +1,4 @@
-import { LoadingSpinnerComponent } from './../components/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from '../modules/shared/components/loading-spinner/loading-spinner.component';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayPositionBuilder, OverlayRef, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { Injectable, Renderer2 } from '@angular/core';

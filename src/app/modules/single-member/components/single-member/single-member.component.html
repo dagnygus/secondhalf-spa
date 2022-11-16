@@ -1,0 +1,145 @@
+<ng-container  [ngSwitch]="memberStatus">
+
+  <ng-template ngSwitchCase="complete">
+    <app-single-member-header [member]="member"
+                              [likePending]="likePending"
+                              (liked)="onLike($event, member.liked)"
+                              [isAuth]="isAuth"
+                              (chat)="onChat()"
+                              @header></app-single-member-header>
+    <ng-container mediaSwitch
+                  (breakpointEnter)="onBreakpointEnter($event === 580)"
+                  (breakpointLeave)="onBreakpointLeave($event === 580)">
+      <ng-template mediaSwitchDefault>
+        <mat-tab-group mat-stretch-tabs
+                       backgroundColor="primary"
+                       scrollTargetId="mat-tab"
+                       scrollOnClickToId="mat-tab"
+                       [scrollTranslation]="-64"
+                       clickQuery="mat-tab-header"
+                       [selectedIndex]="selectedTabIndex"
+                       (selectedIndexChange)="onSelectedTabIndexChange($event)"
+                       @fade>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="single-member__tab-template-container" @fade>
+                <mat-icon>
+                  info
+                </mat-icon>
+                <small>Info</small>
+              </div>
+            </ng-template>
+            <app-single-member-info [member]="member"></app-single-member-info>
+          </mat-tab>
+          <mat-tab [ngSwitch]="imagesStatus">
+            <ng-template mat-tab-label>
+              <div class="single-member__tab-template-container">
+                <mat-icon>
+                  collections
+                </mat-icon>
+                <small>Photos</small>
+              </div>
+            </ng-template>
+            <app-single-member-photos *ngSwitchCase="'complete'"
+                                      [imagesUrls]="imagesUrls"
+                                      [rowGap]="'5px'"
+                                      [columnGap]="'5px'"
+                                      @fade></app-single-member-photos>
+            <ng-template ngSwitchCase="empty">
+              <div class="single-member__sm-empty-photos-container">
+                <mat-icon>
+                  sentiment_dissatisfied
+                </mat-icon>
+                <span>
+                  This user has no pictures to display.
+                </span>
+              </div>
+            </ng-template>
+            <ng-template ngSwitchCase="pending">
+              <div class="single-member__sm-pending-photos-container">
+                <app-loading-spinner></app-loading-spinner>
+              </div>
+            </ng-template>
+          </mat-tab>
+          <mat-tab #chatTab>
+            <ng-template mat-tab-label>
+              <div class="single-member__tab-template-container">
+                <mat-icon>
+                  chat
+                </mat-icon>
+                <small>Chat</small>
+              </div>
+            </ng-template>
+            <app-single-member-chat [chatActive]="chatTab.isActive"
+                                    [memberNickName]="member.nickName"
+                                    [isAuth]="isAuth"></app-single-member-chat>
+          </mat-tab>
+        </mat-tab-group>
+      </ng-template>
+      <ng-template mediaSwitchCase="580">
+        <app-single-member-info class="secendary-info"
+                                [member]="member"
+                                [withNames]="false"
+                                [withAboutMySelf]="false"
+                                @info></app-single-member-info>
+        <div [ngSwitch]="imagesStatus" @photoContainer class="single-member__photos-wrapper">
+          <div class="single-member__photos-container mat-elevation-z6" *ngSwitchCase="'complete'">
+            <app-single-member-photos [imagesUrls]="imagesUrls"
+                                      [rowGap]="'2px'"
+                                      [columnGap]="'2px'"></app-single-member-photos>
+          </div>
+          <ng-template ngSwitchCase="pending">
+            <div class="single-member__pending-photos-container mat-elevation-z6">
+              <div class="single-member__pending-big-photo"></div>
+              <div class="single-member__pending-small-photo"></div>
+              <div class="single-member__pending-small-photo"></div>
+              <div class="single-member__pending-small-photo"></div>
+              <div class="single-member__pending-small-photo"></div>
+            </div>
+          </ng-template>
+          <ng-template ngSwitchCase="empty">
+            <div class="single-member__empty-photos-container">
+              <div class="single-member__empty-photos-message-wrapper">
+                <mat-icon>
+                  sentiment_dissatisfied
+                </mat-icon>
+                <span>
+                  This user has no pictures to display.
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <div class="single-member__about-wrapper">
+          <div class="single-member__about-container mat-elevation-z6" #aboutContainer
+               [@about]="{ value: showMore, params: { startHeight } }"
+               (@about.done)="onShowingAbout(false)"
+               (@about.start)="onShowingAbout(true)"
+               *ngIf="member.aboutMySelf"
+               @mdAbout>
+            <div class="single-member__inner-grid" [style.position]="(showMore ? 'static' : '') | media:{ '1024': 'static' }">
+              <div class="single-member__about-header-container">
+                <span class="single-member__about-header">About</span>
+              </div>
+              <div>{{member.aboutMySelf}}</div>
+            </div>
+            <div class="single-member__overlay"
+                 [style.visibility]="showMore ? 'hidden' : ''| media:{ '1024': 'hidden' }"></div>
+            <button mat-button
+                    *ngIf="aboutContainer.scrollHeight > aboutContainer.clientHeight || showMore || showingMoreOrLess"
+                    class="single-member__show-more-btn"
+                    color="accent"
+                    (click)="onShowMoreOrLessBtnClick(aboutContainer.clientHeight)">show {{ showMore ? 'less': 'more' }}</button>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+
+  <ng-template ngSwitchCase="pending">
+    <div class="single-member__pending-container">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </ng-template>
+
+</ng-container>

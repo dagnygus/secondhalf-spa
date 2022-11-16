@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { alpha, alphaNumeric, required } from '@rxweb/reactive-form-validators';
 import { environment } from 'src/environments/environment';
 

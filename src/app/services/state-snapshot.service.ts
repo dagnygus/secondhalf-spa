@@ -16,8 +16,8 @@ export class StateSnapshotService {
 
 
   getAuthState(): AuthState { return (this.state.getValue() as AppState).auth; }
-  getMembersState(): MembersState { return (this.state.getValue() as AppState).members; }
-  getMemberState(): MemberState { return (this.state.getValue() as AppState).member; }
+  getMembersState(): MembersState | undefined { return (this.state.getValue() as AppState).members; }
+  getMemberState(): MemberState | undefined { return (this.state.getValue() as AppState).member; }
   getChatState(): ChatState { return (this.state.getValue() as AppState).chat; }
   getNotificationState(): NotificationState { return (this.state.getValue() as AppState).notification; }
   getImageState(): ImageState { return (this.state.getValue() as AppState).image; }

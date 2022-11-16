@@ -70,9 +70,10 @@ export class AuthEffects {
               return signinSuccess({ newState, expirationTime });
             })
           );
-        })
+        }),
+        catchError((error) => of(signinFailed({ error })))
       )),
-    catchError((error) => of(signinFailed({ error })))
+    // catchError((error) => of(signinFailed({ error })))
   ));
 
   saveCurrentStateInLocalStorage = createEffect(() => this._actions$.pipe(

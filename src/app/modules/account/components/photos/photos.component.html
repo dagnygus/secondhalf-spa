@@ -1,0 +1,33 @@
+<app-new-photos [uploadedPictureFromCamera$]="imageUploaded$"
+                [uploadedImagesFromHardDrive$]="imagesUploaded$"
+                (pictureFromCameraAccepted)="uplaodPhoto($event)"
+                (imagesAccepted)="uploadPhotos($event)"></app-new-photos>
+
+<ng-container [ngSwitch]="imagesStateStatus$ | async">
+  <app-current-photos *ngSwitchCase="'complete'"
+                      [imagesUrls]="images$ | async"
+                      [imageUploaded$]="imageUploaded$"
+                      [imagesUploaded$]="imagesUploaded$"
+                      [deleteImageSuccess$]="deleteImageSuccess$"
+                      [selectingMainImage$]="patchingMainImageUrl$"></app-current-photos>
+
+  <div *ngSwitchCase="'pending'" class="photos__pending-or-error-container">
+    <p class="photos__loading-text">LOADING</p>
+      <app-loading-spinner class="photos__loading-spinner-container"></app-loading-spinner>
+  </div>
+
+  <div *ngSwitchCase="'error'" class="photos__pending-or-error-container">
+    <div class="photos_error-text-container mat-elevation-z6">
+      <span>Failed to dawnload photos. Please refresh the page or try again later</span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'empty'" class="photos__pending-or-error-container">
+    <div class="photos__pending-or-error-container column-center">
+      <div class="photos_empty-text-container mat-elevation-z6">
+        <span>You don't have any photos right now. Please add some pictures to your account.</span>
+      </div>
+    </div>
+  </div>
+</ng-container>
+

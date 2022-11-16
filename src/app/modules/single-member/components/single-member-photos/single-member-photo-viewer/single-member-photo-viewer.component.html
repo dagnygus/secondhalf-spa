@@ -1,0 +1,19 @@
+<!-- <div class="single-member-photo-viewer__image-strecher pe-none"></div> -->
+<img class="single-member-photo-viewer__image"
+#img1/>
+<img class="single-member-photo-viewer__image"
+#img2/>
+<img class="single-member-photo-viewer__image"
+#img3/>
+<div class="single-member-photo-viewer__btn-group">
+  <button mat-fab color="accent" #backBtn [disabled]="currentIndex === 0">
+    <mat-icon>
+      arrow_back
+    </mat-icon>
+  </button>
+  <button mat-fab color="accent" #frwBtn [disabled]="currentIndex === this.imagesUrls.length - 1">
+    <mat-icon>
+      arrow_forward
+    </mat-icon>
+  </button>
+</div>

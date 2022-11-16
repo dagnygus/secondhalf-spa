@@ -1,15 +1,14 @@
 import { ScrollManager } from './../services/scroll-manager';
 import { Location } from '@angular/common';
-import { AnimationFrame } from './../services/animation-frame';
 /* eslint-disable max-len */
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, Router, CanLoad, Route, UrlSegment } from '@angular/router';
 import { Injectable,  } from '@angular/core';
-import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class SignInGuard implements CanActivate {
-  private _guardedPaths: string[] = [];
+export class SignInGuard implements CanActivate, CanLoad {
+  private _guardedPaths = new Set<string>();
 
   constructor(private _bpObs: BreakpointObserver,
               private _location: Location,
@@ -18,17 +17,27 @@ export class SignInGuard implements CanActivate {
     this._init();
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    if (!this._guardedPaths.includes(state.url)) {
-      this._guardedPaths.push(state.url);
+  canLoad(_: Route, segments: UrlSegment[]): boolean | UrlTree {
+    const url = '/' + segments.toString().replace(',', '/');
+
+    if (!this._guardedPaths.has(url)) {
+      this._guardedPaths.add(url);
     }
 
-    return !this._bpObs.isMatched('(min-width: 580px)');
+    return !this._bpObs.isMatched('(min-width: 580px)') || this._router.parseUrl('/');
+  }
+
+  canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree{
+    if (!this._guardedPaths.has(state.url)) {
+      this._guardedPaths.add(state.url);
+    }
+
+    return !this._bpObs.isMatched('(min-width: 580px)') || this._router.parseUrl('/');
   }
 
   private _init(): void {
     this._bpObs.observe('(min-width: 580px)').subscribe((state) => {
-      if (state.matches && this._guardedPaths.includes(this._location.path())) {
+      if (state.matches && this._guardedPaths.has(this._location.path())) {
         this._router.navigateByUrl('/');
         this._scrollManager.scrollTo({ offestY: 0 });
       }

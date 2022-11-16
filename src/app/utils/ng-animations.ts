@@ -1673,6 +1673,3 @@ export const rotateOutRightUpAnimation = ((duration: DurationType, delay: Durati
   rotateOutStartState,
   animate(`${duration} ${delay} cubic-bezier(0.215, 0.61, 0.355, 1)`, rotateOutRightUpKeyframes)
 ])) as any as NgAnimationFn;
-
-rotateOutRightUpAnimation.startState = rotateOutStartState;
-rotateOutRightUpAnimation.endState = rotateOutLeftDownAnimation.endState;

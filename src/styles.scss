@@ -1,5 +1,5 @@
 // @use '~@angular/material' as mat;
-@use './app/my-package/stylesheets' as *;
+// @use './app/my-package/stylesheets' as *;
 @use './mat-theme/abstract/math-abs' as *;
 @use './mat-theme/components/math-comp' as *;
 @use '../node_modules/keen-slider/keen-slider.min.css';
@@ -57,6 +57,20 @@
 @debug $primary-color;
 @debug $accent-color;
 
+@mixin create-mat-backgrounds($primary, $accent, $warn) {
+  .bg-primary {
+    background-color: $primary;
+  }
+
+  .bg-accent {
+    background-color: $accent;
+  }
+
+  .bg-warn {
+    background-color: $warn;
+  }
+}
+
 @include create-mat-backgrounds(
   $primary-color,
   $accent-color,
@@ -88,7 +102,7 @@ route-outlet {
 .page-container {
   display: grid;
   align-items: start;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .page-component {

@@ -1,0 +1,198 @@
+<div class="navbar__sticker" #sticker>
+  <div class="navbar__container bg-gr-primary mat-elevation-z4" @container>
+    <div class="navbar__gird">
+
+      <div class="navbar__logo-container">
+        <a routerLink='/' (click)="close()">
+          <img class="navbar__logo-image" src="/assets/front_end_images/second_half_logo.svg" alt="logo">
+        </a>
+      </div>
+
+
+
+      <ng-template #smallViewportTmpl>
+        <div class="navbar__menu-button-container">
+          <button class="navbar__menu-button"
+                  #listButton
+                  scrollOnClickToId="nav"
+                  [scrollDisabled]="!navbarOpen || fixed"
+                  [@menuButton]="navbarOpen"
+                  (click)="toogle()">
+          </button>
+          <div *ngIf="notificationCount"
+               class="navbar__notification-informer bg-gr-accent mat-elevation-z6">
+               <span>{{ notificationCount }}</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-container *mediaIf="580; else smallViewportTmpl">
+        <nav class="navbar__big-viewport-nav">
+          <a routerLink="/about"
+             mat-button
+             class="clickable"
+             color="accent">
+              About
+          </a>
+          <a routerLink="/opinions"
+             mat-button
+             class="clickable"
+             color="accent">
+              Opinions
+          </a>
+          <a routerLink="/products"
+             mat-button
+             class="clickable"
+             color="accent">
+              Products
+          </a>
+          <a mat-button
+             class="clickable"
+             color="accent"
+             routerLink="/members">
+              Members
+          </a>
+
+          <ng-template [mediaIf]="900">
+            <ng-template [ngIf]="isAuth" [ngIfElse]="unauthTmpl">
+              <a routerLink="/account/details"
+                 mat-raised-button
+                 color="accent"
+                 class="clickable"><mat-icon>person</mat-icon> account</a>
+              <button mat-raised-button
+                      class="clickable"
+                      color="warn"
+                      (click)="logout()"><mat-icon>logout</mat-icon> Logout</button>
+            </ng-template>
+            <ng-template #unauthTmpl>
+              <button mat-raised-button
+                      color="accent"
+                      class="clickable"
+                      scrollOnClickToId="header"
+                      (click)="onSignInBtnClick()"><mat-icon>login</mat-icon> Login</button>
+              <a routerLink="/signup"
+                 mat-raised-button
+                 color="accent"
+                 class="clickable"><mat-icon>person_add</mat-icon> Register</a>
+            </ng-template>
+
+          </ng-template>
+        </nav>
+
+        <ng-template [ngIf]="isAuth && notificationCount !== 0">
+          <button mat-mini-fab class="navbar__big-viewport-notification-btn margin-left-8"
+                  [matBadge]="notificationCount"
+                  matBadgeColor="primary"
+                  matBadgePosition="below before"
+                  [matBadgeHidden]="!notificationCount"
+                  scrollOnClickToId="nav"
+                  [scrollDisabled]="fixed || overlayOpen"
+                  (scrollDone)="onScrollDone()"
+                  cdkOverlayOrigin
+                  #overlayOrigin="cdkOverlayOrigin"
+                  (click)="tryToggleOverlay()">
+              <mat-icon>
+                notifications
+              </mat-icon>
+          </button>
+          <ng-template cdkConnectedOverlay
+                       [cdkConnectedOverlayOrigin]="overlayOrigin"
+                       [cdkConnectedOverlayOpen]="overlayOpen">
+            <app-notifications appXOverflowScroll class="header__notifications mat-elevation-z6" @dropdawnOverlay></app-notifications>
+          </ng-template>
+        </ng-template>
+
+      </ng-container>
+
+
+    </div>
+
+    <div class="navbar__expander" [@expander]="navbarOpen" *ngIf="!isBigViewport">
+
+      <div class="navbar__expander-upper-inner">
+
+          <button mat-icon-button
+                  class="navbar__cancel-button clickable"
+                  (click)="toogle()">
+            <mat-icon class="navbar__cance-icon">
+              <span class="material-icons-outlined navbar__cancel-icon">
+                cancel
+              </span>
+            </mat-icon>
+          </button>
+
+            <ng-container *ngIf="isAuth; else unauthTemplate">
+              <button mat-raised-button
+                      color="accent"
+                      class="mat-elevation-z8 clickable register-button navbar__auth-btn"
+                      [@authButton]="navbarOpen"
+                      (click)="close(); logout()">
+               <mat-icon>
+                 logout
+               </mat-icon> Logout
+             </button>
+
+              <a mat-raised-button
+                 routerLink="/account/details"
+                 color="accent"
+                 class="mat-elevation-z8 clickable login-button navbar__auth-btn"
+                 [@authButton]="navbarOpen"
+                 (click)="close()">
+                <mat-icon>
+                  <span class="material-icons-outlined">
+                    person
+                  </span>
+                </mat-icon>
+                Your account
+              </a>
+            </ng-container>
+
+            <ng-template #unauthTemplate>
+              <a routerLink='/signin'
+                 mat-raised-button
+                 color="accent"
+                 class="mat-elevation-z8 clickable register-button navbar__auth-btn"
+                 [@authButton]="navbarOpen"
+                 (click)="close()">
+               <mat-icon>
+                 login
+               </mat-icon> Login
+             </a>
+
+              <a routerLink="/signup"
+                mat-raised-button
+                color="accent"
+                class="mat-elevation-z8 clickable login-button navbar__auth-btn"
+                [@authButton]="navbarOpen"
+                (click)="close()">
+                <mat-icon>
+                  <span class="material-icons-outlined">
+                    person_add
+                  </span>
+                </mat-icon>
+                Register
+              </a>
+            </ng-template>
+
+      </div>
+
+        <div class="navbar__expander-lower-inner" [@bottomLinks]="navbarOpen">
+
+          <a routerLink="/about" class="clickable" mat-raised-button (click)="close()">About</a>
+          <a routerLink="/opinions" class="clickable" mat-raised-button (click)="close()">Opinions</a>
+          <a routerLink="/products" class="clickable" mat-raised-button (click)="close()">Products</a>
+          <a routerLink="/members" mat-raised-button (click)="close()">Members</a>
+          <a *ngIf="notificationCount"
+             routerLink="/notifications"
+             mat-raised-button (click)="close()"
+             color="accent"
+             [matBadge]="notificationCount"
+             matBadgeColor="warn"
+             matBadgeSize="large">Notifications</a>
+
+        </div>
+
+    </div>
+  </div>
+</div>
+

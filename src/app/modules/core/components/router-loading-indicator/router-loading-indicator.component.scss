@@ -1,0 +1,30 @@
+@use 'src/mat-theme/abstract/math-abs' as math;
+
+:host {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 10px;
+  width: 100%;
+  z-index: 1000;
+}
+
+.router-loading-indicator__loading-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%;
+  height: 100%;
+  background-image: linear-gradient(to right, math.$accent-color, math.$primary-color, math.$accent-color);
+  animation: 1.5s ease-in-out infinite alternate loading-item-animation;
+}
+
+@keyframes loading-item-animation {
+  0% {
+    transform: translateX(0)
+  }
+  100% {
+    transform: translate(-50%);
+  }
+}

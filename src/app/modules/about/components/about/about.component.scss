@@ -1,0 +1,143 @@
+@use 'src/mat-theme/abstract/math-abs' as mat;
+
+:host {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+  justify-items: center;
+}
+
+.about__first-section {
+  background-color: lighten(mat.$accent-color, 20%);
+  width: 100%;
+  max-width: 560px;
+  @media (min-width: 720px) {
+    max-width: 930px;
+  }
+}
+
+.about__article {
+  margin-left: 16px;
+  margin-right: 16px;
+
+  > span {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+
+.about__article-headig {
+  font-size: 32px;
+  text-align: center;
+  font-style: italic;
+  margin: 28px 8px;
+  text-shadow: 1px 1px 2px rgba($color: mat.$primary-color, $alpha: .36);
+}
+
+.about__article-paragraph {
+  text-align: left;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.about__join-now-btn {
+  font-size: 20px !important;
+  padding: 8px 16px !important;
+  border-radius: 24px;
+  margin-bottom: 24px;
+}
+
+.about__container {
+  display: grid;
+  background-color: white;
+  width: 100%;
+  padding-bottom: 56px;
+  max-width: 560px;
+
+  @media (min-width: 720px) {
+    grid-template-columns: 1fr 1fr;
+    max-width: 1200px;
+  }
+}
+
+.about__container-item {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.about__small-heading {
+  margin-top: 28px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.about__loving-couple-img-container {
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+
+    @media (min-width: 720px) {
+      padding-bottom: calc(1 / (750 / 965) * 100%);
+    }
+  }
+
+  @media (min-width: 720px) {
+    margin: 0 16px;
+  }
+}
+
+.about__img {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.about__selfie-fiends-img-container {
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: calc( 1 / (750 / 972) * 100%);
+  }
+
+  > img {
+    object-position: 70% 50%;
+  }
+
+  @media (min-width: 720px) {
+    margin: 0 16px;
+  }
+}
+
+.about__group-img-container {
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: calc( 1 / (750 / 744) * 100%);
+
+    @media (min-width: 720px) {
+      padding-bottom: calc(1 / (750 / 965) * 100%);
+    }
+  }
+
+  @media (min-width: 720px) {
+    margin: 0 16px;
+  }
+}
+
+.about__container-column {
+  display: flex;
+  flex-direction: column;
+}
