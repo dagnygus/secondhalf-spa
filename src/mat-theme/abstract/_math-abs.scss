@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $secondhalf-spa-primary: mat.define-palette(mat.$deep-purple-palette, A700);
 $secondhalf-spa-accent: mat.define-palette(mat.$pink-palette, A200);
