@@ -1,4 +1,3 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
@@ -22,7 +21,6 @@ import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import { getStorage, connectStorageEmulator } from 'firebase/storage';
 import { environment } from 'src/environments/environment';
-import { BrowserModule } from '@angular/platform-browser';
 import { NotFoundComponent } from './components/404/not-found.component';
 import { RouterLoadingIndicatorComponent } from './components/router-loading-indicator/router-loading-indicator.component';
 
@@ -46,7 +44,9 @@ const routes: Routes = [
   imports: [
     SharedModule,
     NotificationsModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {
+    initialNavigation: 'enabledBlocking'
+}),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => {
       const firestore = getFirestore();
@@ -70,8 +70,6 @@ const routes: Routes = [
       return auth;
     }),
     HttpClientModule,
-    BrowserAnimationsModule,
-    BrowserModule.withServerTransition({ appId: 'second-half-server-id-1234' }),
     NotificationsModule
   ],
   providers: [
@@ -86,8 +84,6 @@ const routes: Routes = [
     BackgroundCarouselComponent,
     NavbarComponent,
     HttpClientModule,
-    BrowserAnimationsModule,
-    BrowserModule,
   ]
 })
 export class CoreModule { }
