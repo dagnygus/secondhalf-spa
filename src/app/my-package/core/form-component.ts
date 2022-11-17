@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Destroyable } from './destroyable';
 import { Directive } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormGroup } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, UntypedFormGroup } from '@angular/forms';
 import { Observable, OperatorFunction, pipe, UnaryFunction } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
@@ -19,8 +19,8 @@ export abstract class FormComponent<TModel extends object> {
     return !this._onceSubmited ? false : !this._form ? false : this._form!.invalid || this._form!.pending;
   }
 
-  private _form?: FormGroup;
-  public get form(): FormGroup | undefined {
+  private _form?: UntypedFormGroup;
+  public get form(): UntypedFormGroup | undefined {
     return this._form;
   }
 
@@ -40,7 +40,7 @@ export abstract class FormComponent<TModel extends object> {
   private get _upperOperator(): OperatorType { return map((value: string) => value.toUpperCase()); }
   private get _lowerOperator(): OperatorType { return map((value: string) => value.toUpperCase()); }
 
-  protected setForm(formGroup: FormGroup): void {
+  protected setForm(formGroup: UntypedFormGroup): void {
     if (!this._form) {
       this._form = formGroup;
     }
@@ -108,7 +108,7 @@ export abstract class FormComponent<TModel extends object> {
     ).subscribe(value => control.setValue(value));
   }
 
-  private _markAllAsTouchedAndDirty(form: FormGroup): void {
+  private _markAllAsTouchedAndDirty(form: UntypedFormGroup): void {
     Object.values(form.controls).forEach(control => {
       control.markAsDirty();
       control.markAsTouched();

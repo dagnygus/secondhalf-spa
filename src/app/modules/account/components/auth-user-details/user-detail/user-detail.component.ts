@@ -3,7 +3,7 @@
 import { AsyncValidationService } from '../../../../../services/validation.service';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { ChangeDetectionStrategy, Component, Input, OnInit, AfterViewInit, ChangeDetectorRef, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl, AsyncValidatorFn } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import * as moment from 'moment';
 import { Observable, pipe, Subject } from 'rxjs';
 import { animate, group, query, state, style, transition, trigger, animateChild } from '@angular/animations';
@@ -135,7 +135,7 @@ export class UserDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   private _submited = false;
   private _destroy$ = new Subject<void>();
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   edit = false;
   focus = false;
@@ -178,9 +178,9 @@ export class UserDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    const formControl = this._formControl =  new FormControl();
+    const formControl = this._formControl =  new UntypedFormControl();
 
-    this.form = new FormGroup({
+    this.form = new UntypedFormGroup({
       [this.name]: formControl
     });
 
