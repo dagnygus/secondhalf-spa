@@ -1,0 +1,5 @@
+@use '@angular/material' as mat;
+@use '../abstract/math-abs' as *;
+
+@include mat.core();
+@include mat.all-component-themes($secondhalf-spa-theme);

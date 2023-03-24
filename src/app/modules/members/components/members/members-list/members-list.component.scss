@@ -1,0 +1,22 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+
+  @media(min-width: 419px) {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  @media(min-width: 1000px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+app-member, app-member-placeholder {
+  width: 100%;
+  max-width: 220px;
+}
+
+.members-list__error-message-container {
+  height: 70vh;
+}

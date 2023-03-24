@@ -1,0 +1,5 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+.keen-slider__slide.selected {
+  border: 2px solid mat.$accent-color;
+}

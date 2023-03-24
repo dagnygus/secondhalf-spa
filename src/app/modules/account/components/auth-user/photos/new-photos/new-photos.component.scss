@@ -1,0 +1,74 @@
+@use 'src/mat-theme/abstract/colors' as *;
+
+:host {
+  display: block;
+}
+
+.new-photos__container {
+  display: grid;
+}
+
+.accent-border {
+  padding: 16px 8px;
+  margin-bottom: 16px;
+  perspective: 800px;
+  border: 2px solid $accent-color;
+  border-radius: 8px;
+}
+
+.new-photos__items-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid $accent-color;
+  justify-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 8px;
+  padding: 16px 8px;
+  margin-bottom: 16px;
+  perspective: 800px;
+
+
+  @media (min-width: 500px) {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+}
+
+.new-photos__item {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: start;
+  max-width: 310px;
+}
+
+.new-photos__item::before {
+  content: '';
+  display: block;
+  padding-bottom: calc(100% * 7 / 5);
+}
+
+app-new-photo {
+  width: 100%;
+  max-width: 280px;
+}
+
+.new-photos__upload-btn {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 340px
+}
+
+.new-photos__upload-btn-container {
+  grid-column: 1 / -1;
+
+  > button {
+    width: 100%;
+  }
+}

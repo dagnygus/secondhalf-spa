@@ -1,0 +1,16 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 400px;
+}
+
+p.with-error {
+  margin-bottom: 16px;
+}
+
+form.with-error {
+  grid-template-rows: 1fr auto auto 1fr;
+}

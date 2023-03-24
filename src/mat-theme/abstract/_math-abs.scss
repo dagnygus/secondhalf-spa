@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+
+$secondhalf-spa-primary: mat.define-palette(mat.$deep-purple-palette, A700);
+$secondhalf-spa-accent: mat.define-palette(mat.$pink-palette, A200);
+
+$secondhalf-spa-warn: mat.define-palette(mat.$red-palette);
+
+$secondhalf-spa-theme: mat.define-light-theme((
+  color: (
+    primary: $secondhalf-spa-primary,
+    accent: $secondhalf-spa-accent,
+    warm: $secondhalf-spa-warn
+  )
+));
+
+$color-config: mat.get-color-config($secondhalf-spa-theme);
+$primary-color-palette: map-get($color-config, 'primary');
+$accent-color-palette: map-get($color-config, 'accent');
+$warn-color-palette: map-get($color-config, 'warn');
+
+$primary-color: mat.get-color-from-palette($primary-color-palette);
+$accent-color: mat.get-color-from-palette($accent-color-palette);
+$warn-color: mat.get-color-from-palette($warn-color-palette);
+
+$primary-gradient: linear-gradient(to bottom right, lighten($primary-color, 20%), darken($primary-color, 20%));
+$accent-gradient: linear-gradient(to bottom right, lighten($accent-color, 10%), darken($accent-color, 20%));
+$warn-gradient: linear-gradient(to bottom right, lighten($warn-color, 10%), darken($warn-color, 20%));

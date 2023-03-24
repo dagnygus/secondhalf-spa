@@ -1,0 +1,15 @@
+<textarea class="chat-dialog-textbox__input"
+          #textbox
+          [value]="value"
+          rows="1"
+          (input)="value = textbox.value"
+          appTextAreaAutoSize
+          [maxRows]="4"
+          [disabled]="disabled"
+          (keyup)="onKeyUp($event.key)"
+          (keydown)="onKeyDown($event.key)"></textarea>
+<button mat-mini-fab color="primary" class="self-center" [disabled]="disabled" (click)="onClick()">
+  <mat-icon>
+    send
+  </mat-icon>
+</button>

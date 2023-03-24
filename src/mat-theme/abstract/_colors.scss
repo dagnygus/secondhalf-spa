@@ -1,0 +1,7 @@
+$primary-color: #6200ea;
+$accent-color: #ff4081;
+$warn-color: #f44336;
+
+$primary-gradient: linear-gradient(to bottom right, lighten($primary-color, 20%), darken($primary-color, 20%));
+$accent-gradient: linear-gradient(to bottom right, lighten($accent-color, 10%), darken($accent-color, 20%));
+$warn-gradient: linear-gradient(to bottom right, lighten($warn-color, 10%), darken($warn-color, 20%));

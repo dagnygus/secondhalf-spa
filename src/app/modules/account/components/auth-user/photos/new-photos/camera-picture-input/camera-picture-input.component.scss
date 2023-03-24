@@ -1,0 +1,59 @@
+@use 'src/mat-theme/abstract/colors' as *;
+
+.camera-picture-input__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.32);
+}
+
+.camera-picture-input__canvas-container {
+  display: flex;
+  border: 2px solid $accent-color;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative
+}
+
+.camera-picture-input__buttons-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.camera-picture-input__cancel-button-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 8px;
+}
+
+.camera-picture-input__bottom-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+
+.camera-picture-input__ripple {
+  transform-origin: center;
+  transform: scale(0);
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(transparent, transparent, white 70%);
+  z-index: 100;
+  border-radius: 50%;
+}

@@ -1,0 +1,14 @@
+<div *ngFor="let url of filesData; let index = index"
+     @newPhoto
+     class="photo-container w-full rounded-[8px] overflow-hidden relative
+            before:content-[''] before:block before:pb-[calc(100%_*_1/(5/7))]">
+
+  <img [src]="url" alt="user_image"
+       class="object-cover absolute top-0 left-0 w-full h-full">
+
+  <div class="right-[16px] top-[16px] absolute">
+    <button mat-mini-fab
+            color="warn"
+            (click)="cancel.emit(index)"><mat-icon>cancel</mat-icon></button>
+  </div>
+</div>

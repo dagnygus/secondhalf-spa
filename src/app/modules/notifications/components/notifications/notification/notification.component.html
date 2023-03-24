@@ -1,0 +1,36 @@
+<!-- <div class="notification__container mat-elevation-z6 margin-y-4 row"
+     [ngSwitch]="notification.type"> -->
+<ng-container [ngSwitch]="notification.type">
+  <ng-template ngSwitchCase="chat-notification">
+    <div class="notification__head relative m-[2px] before:content-[''] before:block before:pb-[100%]">
+      <img [src]="notification.photoUrl | mainImageUrl"
+           class="notification__avatar-img absolute object-cover top-0 left-0 w-full h-full rounded-[50%] mat-elevation-z6" style="object-fit: cover; border-radius: 50%">
+        <mat-icon class="notification__icon color-accent" style="position: absolute">chat</mat-icon>
+    </div>
+
+    <div class="message-notification__tail text-left grid auto-rows-fr p-[6px]">
+      <div class="message-notification__info self-start row-[1/2]">
+        <span>{{ notification.nickName }} have send You a message.</span>
+      </div>
+
+      <div class="message-notification__content self-end color-primary">
+        <span class="notification__message-content-text text-ellipsis whitespace-nowrap overflow-hidden w-[65vw] underline"><strong>{{notification.nickName}}: </strong> {{ $any(notification).messageContent }}</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template ngSwitchCase="like-notification">
+    <div class="notification__head relative m-[2px] before:content-[''] before:block before:pb-[100%]">
+      <img [src]="notification.photoUrl | mainImageUrl"
+           class="notification__avatar-img absolute object-cover top-0 left-0 w-full h-full rounded-[50%] mat-elevation-z6" style="object-fit: cover; border-radius: 50%">
+        <mat-icon class="notification__icon absolute bottom-[20px] rigth-[20px] text-[48px]  color-primary">thumb_up</mat-icon>
+    </div>
+
+    <div class="notification__tail">
+      <span>{{ notification.nickName }} is like You.</span>
+    </div>
+  </ng-template>
+</ng-container>
+
+
+<!-- </div> -->

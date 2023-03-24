@@ -1,0 +1,28 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  display: block;
+  height: 64px;
+}
+
+.navbar__sticker {
+  will-change: position;
+}
+
+.navbar__menu-button {
+  background: url(/assets/front_end_images/navbar_button.svg) center/cover no-repeat border-box;
+}
+
+mat-icon.navbar__cancel-icon {
+  font-size: 46px;
+  color: mat.$accent-color;
+  text-shadow: 0 0 10px black;
+  width: 48px;
+  height: 48px;
+  overflow: visible;
+  transform: translate(-25%, -25%);
+}
+
+.navbar__big-viewport-nav {
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+}

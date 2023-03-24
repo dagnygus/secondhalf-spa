@@ -1,0 +1,26 @@
+<div class="text-center m-[48px_auto_32px_auto]">
+  <mat-radio-group *ngIf="membersNotEmpty$ | async"
+                   @inputGroup [value]="currentInputSelection"
+                   [disabled]="membersPending$ | async"
+                   (change)="currentInputSelection = $event.value">
+    <mat-radio-button value="all">All</mat-radio-button>
+    <mat-radio-button value="female">Women</mat-radio-button>
+    <mat-radio-button value="male">Men</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<app-members-list class="mx-auto"
+                  [members]="members$ | async | assert"
+                  [membersStateStatus]="membersStatus$ | async | assert"
+                  [pendingIndex]="pendingIndex$ | async | assert"
+                  (pendingIndexChange)="pendingIndex$.next($event)"
+                  [isAuth]="isAuth$ | async | assert"
+                  (like)="onLike($event)"></app-members-list>
+
+<app-pagination *ngIf="totalPagesMoreThenZero$ | async"
+                class="mt-[48px] w-full"
+                [totalPages]="totalPages$ | async | assert"
+                [currentPage]="currentPage$ | async | assert"
+                [range]="1 | media: { '520': 2 }"
+                [edgeRange]="1 | media: { '410': 2 }"
+                (pageSelected)="onPageSelected($event)"></app-pagination>

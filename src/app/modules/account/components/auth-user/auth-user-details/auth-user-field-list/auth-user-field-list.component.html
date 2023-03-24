@@ -1,0 +1,10 @@
+<app-user-detail *ngFor="let fieldName of fieldNames; let i=index"
+                  [name]="fieldName"
+                  [label]="labels[i]"
+                  [control]="controls[fieldName]"
+                  class="justify-self-center my-[16px] w-full max-w-[430px] mat-elevation-z3"
+                  [multiline]="fieldName === 'aboutMySelf'"
+                  [isDate]="fieldName === 'dateOfBirth'"
+                  (detailSubmit)="detailSubmit.emit(fieldName)"
+                  (detailCancel)="detailCancel.emit()"
+                  [pending]="pendingFieldName === fieldName"></app-user-detail>

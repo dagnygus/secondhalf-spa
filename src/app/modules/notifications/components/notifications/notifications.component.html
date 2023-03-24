@@ -1,0 +1,6 @@
+<div appToogleOverflow class="flex flex-col items-center min-h-[80vh] min580:p-[8px] min580:min-h-[unset]">
+  <app-notification *ngFor="let notification of notifications$ | async; trackBy: trackBy; let i = index"
+                    [notification]="notification"
+                    class="w-full max-w-[410px] cursor-pointer mat-elevation-z6 rounded-[4px] bg-white"
+                    (click)="onNotificationClick(i, notification)"></app-notification>
+</div>

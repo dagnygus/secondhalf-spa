@@ -1,0 +1,120 @@
+<ng-container  [ngSwitch]="memberStatus$ | async">
+
+  <ng-template ngSwitchCase="complete">
+    <app-single-member-header #memberHeader
+                              class="py-[16px] place-self-center w-full max-w-[400px] min1024:self-start"
+                              [member]="member$ | async | assert"
+                              [likePending]="likePending$ | async | assert"
+                              (liked)="onLike($event, memberHeader.member.liked)"
+                              [isAuth]="isAuth$ | async | assert"
+                              (chat)="onChat(memberHeader.member)"
+                              @header></app-single-member-header>
+    <ng-container mediaSwitch>
+      <ng-template mediaSwitchDefault>
+        <mat-tab-group mat-stretch-tabs
+                       class="w-[100%] min580:hidden"
+                       backgroundColor="primary"
+                       [(selectedIndex)]="selectedTabIndex"
+                       @fade>
+          <mat-tab class="w-[100%]">
+            <ng-template mat-tab-label>
+              <div class="flex flex-col items-center w-full" @fade>
+                <mat-icon>
+                  info
+                </mat-icon>
+                <small>Info</small>
+              </div>
+            </ng-template>
+            <app-single-member-info *ngIf="selectedTabIndex === 0"
+                                    class="p-[16px_0] min580:p-[16px_0_0_0] min580:self-start
+                                           min1024:translate-y-[-100px]"
+                                    [member]="member$ | async | assert"></app-single-member-info>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="flex flex-col items-center w-full">
+                <mat-icon>
+                  collections
+                </mat-icon>
+                <small>Photos</small>
+              </div>
+            </ng-template>
+            <app-single-member-images *ngIf="selectedTabIndex === 1"
+                                      class="max-w-[60vh] mx-auto min580:w-full
+                                             min1024:row[1/3] w-full"
+                                     [urls]="imagesUrls$ | async"
+                                     [imageStateStatus]="imagesStatus$ | async | assert"></app-single-member-images>
+          </mat-tab>
+          <mat-tab #chatTab>
+            <ng-template mat-tab-label>
+              <div class="flex flex-col items-center w-[100%]">
+                <mat-icon>
+                  chat
+                </mat-icon>
+                <small>Chat</small>
+              </div>
+            </ng-template>
+            <app-single-member-chat *ngIf="selectedTabIndex === 2"
+                                    class="h-[calc(100vh_-_64px_-_49px)] w-full max-w-[400px] mx-auto"
+                                    [memberNickName]="memberNickName$ | async | assert"
+                                    [isAuth]="isAuth$ | async | assert"
+                                    [messages]="messages$ | async | assert"
+                                    [chatStatus]="chatStatus$ | async | assert"
+                                    [sendingStatus]="sendingMessageStatus$ | async"
+                                    [(messageToSend)]="messageToSend"
+                                    (send)="onSendMessage($event)"></app-single-member-chat>
+          </mat-tab>
+        </mat-tab-group>
+      </ng-template>
+      <ng-template mediaSwitchCase="580">
+        <app-single-member-info class="p-[16px_0] min580:p-[16px_0_0_0] min580:self-start
+                                       min1024:translate-y-[-100px] row-[2/4] min1024:row-[2/3]"
+                                [member]="member$ | async | assert"
+                                [withNames]="false"
+                                [withAboutMySelf]="false"
+                                @info></app-single-member-info>
+
+        <div class="flex justify-center items-center bg-white mat-elevation-z6
+                    p-[8px] rounded-[8px] max-w-[415px]" @photoContainer>
+          <app-single-member-images class="mx-auto w-full"
+                                    [urls]="imagesUrls$ | async"
+                                    [imageStateStatus]="imagesStatus$ | async | assert"></app-single-member-images>
+        </div>
+
+        <div class="max-w-[415px] min1024:max-w-[780px] min1024:col-[1/3] min1024:mt-[64px]
+                    min1024:justify-self-center min1024:p-[0_16px_16px_16px] min1024:translate-y-[-130px]">
+          <div class="w-full h-full relative bg-[rgb(246,166,193)] rounded-[6px] m-[8px_4px_0px_4px]
+                      min-h-[260px] min1024:p-[0_16px_16px_16px] overflow-hidden mat-elevation-z6"
+                #aboutContainer
+               [@about]="{ value: showMore, params: { startHeight } }"
+               (@about.done)="onShowingAbout(false)"
+               (@about.start)="onShowingAbout(true)"
+               *ngIf="aboutMember$ | async as aboutMember"
+               @mdAbout>
+            <div class="grid absolute w-full h-full top-0 left-0 p-[6px]"
+                 [style.position]="(showMore ? 'static' : '') | media:{ '1024': 'static' }">
+              <div class="single-member__about-header-container">
+                <span class="single-member__about-header">About</span>
+              </div>
+              <div>{{aboutMember}}</div>
+            </div>
+            <div class="single-member__overlay"
+                 [style.visibility]="showMore ? 'hidden' : ''| media:{ '1024': 'hidden' }"></div>
+            <button mat-button
+                    *ngIf="aboutContainer.scrollHeight > aboutContainer.clientHeight || showMore || showingMoreOrLess"
+                    class="single-member__show-more-btn"
+                    color="accent"
+                    (click)="onShowMoreOrLessBtnClick(aboutContainer.clientHeight)">show {{ showMore ? 'less': 'more' }}</button>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+
+  <ng-template ngSwitchCase="pending">
+    <div class="single-member__pending-container">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </ng-template>
+
+</ng-container>

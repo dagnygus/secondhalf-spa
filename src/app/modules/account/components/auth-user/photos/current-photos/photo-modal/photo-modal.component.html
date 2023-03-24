@@ -1,0 +1,20 @@
+<div #imageContainer class="row-[1/2] col-[1/2] w-full relative before:content-[''] before:block before:pb-[calc(1/(3/4)_*_100%)]">
+  <img #image [src]="url" class="object-cover absolute top-0 left-0 w-full h-full invisible mat-elevation-z3" alt="member_image">
+</div>
+
+<div class="row-[1/2] col-[1/2] self-start justify-self-end m-[16px] origin-center">
+  <button mat-icon-button color="primary" class="scale-125" (click)="close()" [@closeBtn]="animationState">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>
+
+<div class="grid grid-cols-[2fr_1fr] gap-[6px] col-[1/2]" [@btnGroup]="animationState">
+  <button *ngIf="!isMain" mat-raised-button color="accent"
+          class="cursor-pointer main-btn"
+          (click)="onSelect.next(url)">Set as main image</button>
+  <button mat-raised-button color="warn"
+          class="col-[2/3] cursor-pointer delete-btn"
+          (click)="onDelete.next(index)">
+    <mat-icon>delete</mat-icon> Deleteee
+  </button>
+</div>

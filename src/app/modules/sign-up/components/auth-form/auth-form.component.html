@@ -1,0 +1,111 @@
+<form class="grid grid-rows-[1fr_auto_1fr]"
+      [class.with-error]="error$ | async"
+      [formGroup]="formGroup"
+      (ngSubmit)="formSubmitter.trySubmit()">
+
+
+  <div class="header self-end p-[16px] text-center">
+    <p>Complate the form to register account. If you have accout, please
+      <a class="text-blue-600 visited:text-purple-400 underline cursor-pointer" routerLink="/signin">login</a>.</p>
+  </div>
+
+  <div *ngIf="error$ | async"
+       class="place-self-center w-[90%] text-center color-warn">
+    <ng-container [ngSwitch]="error$ | async">
+      <span *ngSwitchCase="'auth/email-already-exists'">
+        Provided e-mail address already exist.
+      </span>
+      <span *ngSwitchDefault>
+        An internal server error accour. Please try again later.
+      </span>
+    </ng-container>
+    Some DUMY ERROR
+  </div>
+
+  <div class="grid gap-[16px] min840:grid-cols-2">
+
+    <mat-form-field class="regular" appearance="fill" color="accent">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" name="firstName" formControlName="firstName">
+      <mat-error *appFirstKeyOf="formGroup.controls.firstName.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="regular" appearance="fill" color="accent">
+      <mat-label>Last Name</mat-label>
+      <input matInput type="text" name="lastName" formControlName="lastName">
+      <mat-error *appFirstKeyOf="formGroup.controls.lastName.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="regular" appearance="fill" color="accent">
+      <mat-label>Nick Name</mat-label>
+      <input matInput type="text" name="nickName" formControlName="nickName">
+      <mat-error *appFirstKeyOf="formGroup.controls.nickName.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="regular" appearance="fill" color="accent">
+      <mat-label>Address E-mail</mat-label>
+      <input matInput type="text" name="email" formControlName="email" inputmode="email" async-validation-on-blur>
+      <mat-error *appFirstKeyOf="formGroup.controls.email.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="regular" appearance="fill" color="accent">
+      <mat-label>Your Gender</mat-label>
+      <mat-select formControlName="gender">
+        <mat-option value="male">Male</mat-option>
+        <mat-option value="female">Female</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="regular" appearance="fill" color="accent">
+      <mat-label>Choose your date of birth</mat-label>
+      <input type="text"
+             matInput
+             formControlName="dateOfBirth"
+             datepicker="yyyy-MM-dd"
+             readonly
+             (dateSelected)="formGroup.controls.dateOfBirth.setValue($event)">
+
+      <mat-error *appFirstKeyOf="formGroup.controls.dateOfBirth.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field  class="regular" appearance="fill" color="accent">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="passwordHidden ? 'password' : 'text'" name="password" formControlName="password">
+      <button type="button" mat-icon-button matSuffix tabindex="-1" (click)="passwordHidden = !passwordHidden">
+        <mat-icon>
+          {{ passwordHidden ? 'visibility'  : 'visibility_off' }}
+        </mat-icon>
+      </button>
+      <mat-error *appFirstKeyOf="formGroup.controls.password.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="regular" appearance="fill" color="accent">
+      <mat-label>Confirm password</mat-label>
+      <input matInput [type]="passwordHidden ? 'password' : 'text'" name="password" formControlName="confirmPassword">
+      <button type="button" mat-icon-button matSuffix tabindex="-1" (click)="passwordHidden = !passwordHidden">
+        <mat-icon>
+          {{ passwordHidden ? 'visibility'  : 'visibility_off' }}
+        </mat-icon>
+      </button>
+      <mat-error *appFirstKeyOf="formGroup.controls.confirmPassword.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="last col-[1/-1] w-full max-w-[400px] mx-auto" appearance="fill" color="accent">
+      <mat-label>Write something about your self</mat-label>
+      <textarea matInput
+                name="aboutMySelf"
+                formControlName="aboutMySelf"
+                cdkTextareaAutosize
+                [cdkAutosizeMinRows]="10"
+                ></textarea>
+    </mat-form-field>
+
+  </div>
+
+  <div class="btn-group grid auto-cols-fr grid-flow-col self-start justify-self-center gap-[8px] my-[16px] w-full max-w-[400px]">
+    <button type="submit" mat-raised-button color="primary" class="py-[8px_!important]"
+            [disabled]="submitDisabled$ | async">Register Account</button>
+    <a href="#" mat-raised-button color="warn" class="py-[8px_!important]">Cancel</a>
+  </div>
+
+</form>

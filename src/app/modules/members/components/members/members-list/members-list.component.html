@@ -1,0 +1,67 @@
+<ng-container [ngSwitch]="membersStateStatus">
+
+  <ng-template [ngSwitchCase]="Status.complete">
+    <div *ngFor="let member of members; trackBy: trackBy; let i = index;"
+         class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member class="w-full max-w-[220px] mat-elevation-z6"
+                  [member]="member"
+                  [index]="i"
+                  [isAuth]="isAuth"
+                  [likePending]="i === pendingIndex"
+                  (like)="like.emit(member.userId); pendingIndex = i; pendingIndexChange.emit(i)"></app-member>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="Status.pending">
+
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+    <div class="members-list__item flex w-full max-w-[250px] justify-self-center justify-center
+                items-center before:content-[''] before:block before:pb-[calc(100%_*_(1_/_(4/6)))]">
+      <app-member-placeholder class="w-full max-w-[220px]"></app-member-placeholder>
+    </div>
+
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="Status.error">
+    <div class="members-list__error-message-container">
+      <p>An error has accoure on servere. Please revisit this side later</p>
+    </div>
+  </ng-template>
+
+</ng-container>

@@ -1,0 +1,25 @@
+
+
+<div *ngFor="let url of imagesUrls; let index = index; trackBy: trackBy"
+     [@photo]="null"
+     class="photo relative w-full before:content-[''] before:block before:pb-[calc((4/3)_*_100%)]">
+
+  <img [appLazyImage]="url"
+       [loadingView]="loadingView"
+       #image
+       (click)="onPhotoClick(index, url, image)"
+       alt="image"
+       class="object-cover top-0 left-0 w-full h-full absolute">
+
+  <div *ngIf="compareUrls(url, mainImageUrl)"
+       class="absolute top-0 right-0 text-[22px] rounded-[0_0_0_12px] p-[6px] bg-primary">
+    <span><mat-icon class="color-accent">star</mat-icon> Main</span>
+  </div>
+
+  <div *ngIf="compareUrls(url, mainImageUrl)" class="frame top-0 left-0 w-full h-full absolute pointer-events-none"></div>
+</div>
+
+
+<ng-template appLazyImageLoadingView #loadingView="appLazyImageLoadingView">
+  <app-loading-spinner class="absolute top-[25%] left-[25%] w-[50%]"></app-loading-spinner>
+</ng-template>

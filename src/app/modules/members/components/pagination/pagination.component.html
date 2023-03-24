@@ -1,0 +1,14 @@
+<div class="pagination__btn-group uniform-queue gap-4">
+  <ng-template #btnTemplate let-value>
+    <a class="pagination__btn"
+      [class.active]="value === currentPage"
+      matRipple
+      [routerLink]="null"
+      (click)="pageSelected.emit(value)">{{ value }}</a>
+  </ng-template>
+  <ng-template #elipsisTemplate>
+    <div class="btn btn-color-transparent pagination__elispis">...</div>
+  </ng-template>
+</div>
+
+

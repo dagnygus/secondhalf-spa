@@ -1,0 +1,96 @@
+<div class="user-detalis__container relative overflow-hidden mat-elevation-z4"
+     #container
+     [@userDetail]="{ value: edit, params: { onEditOffHeight: detailLabel.clientHeight + 32, onEditOnHeight: editForm.clientHeight + 32 } }"
+     (@userDetail.done)="edit ? container.style.height = editForm.clientHeight + 32 + 'px' : container.style.height = detailLabel.clientHeight + 32 + 'px'"
+     [style.max-height]="name === 'aboutMySelf' ? '268px' : ''"
+     [class.border-2]="form.controls[name].pending && edit"
+     [class.border-green-300]="form.controls[name].pending && edit">
+  <div #detailLabel
+       class="absolute grid w-[90%] mx-auto grid-cols-[1fr_auto] grid-rows-[auto_1fr] grid-flow-col top-[16px] left-[5%]"
+       [style.visibility]="edit ? 'hidden' : ''"
+       [@label]="edit">
+    <span class="self-center text-[16px] row-[1/2]">{{label}}: <span>{{control.value}}</span></span>
+
+    <button mat-raised-button color="primary"
+            class="min-w-[0_!important] p-[0_!importat] w-[50px_!important] row-[1/2]"
+            (click)="onEditButtonClick()"><mat-icon>upgrade</mat-icon></button>
+
+  </div>
+
+  <div class="absolute bg-[rgba(0,0,0,.15)] z-10 w-full h-full"
+       *ngIf="pending"></div>
+
+  <div class="state-pending-indicator absolute w-[50%] h-full z-10"
+       *ngIf="pending"></div>
+
+  <div class="control-pending-presenter absolute w-full h-full text-green-300 bg-[rgba(0,0,0,0.15)] z-10 "
+       *ngIf="form.controls[name].pending && edit">
+    <div class="row-center">
+      <mat-icon class="control-pending-indicator">refresh</mat-icon> Checking availability
+    </div>
+  </div>
+
+  <form [formGroup]="form"
+        #editForm
+        [@editForm]="edit"
+        (@editForm.done)="onAnimationDone()"
+        (ngSubmit)=" formSubmitter.trySubmit()"
+        class="grid absolute w-[90%] m-[0_auto_8px_auto] top-[16px] left-[5%]"
+        [style.visibility]="edit ? '' : 'hidden'">
+
+        <mat-form-field *ngIf="!multiline && !isDate" appearance="outline">
+          <input type="text"
+                 [name]="name"
+                 matInput
+                 [formControlName]="name"
+                 [appFocus]="focus">
+          <mat-error *appFirstKeyOf="form.controls[name].errors; let error">{{ error }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="isDate" appearance="outline">
+          <input type="text"
+                 [name]="name"
+                 matInput
+                 [formControlName]="name"
+                 [appFocus]="focus"
+                 datepicker="yyyy-MM-dd"
+                 (dateSelected)="form.controls[name].setValue($event)"
+                 readonly>
+          <mat-error *appFirstKeyOf="form.controls[name].errors; let error">{{ error }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="multiline && !isDate" appearance="outline">
+          <textarea [name]="name"
+                    [formControlName]="name"
+                    [appFocus]="focus"
+                    matInput
+                    cdkTextareaAutosize
+                    [cdkAutosizeMinRows]="10"></textarea>
+        </mat-form-field>
+
+
+    <div class="grid grid-flow-col justify-end gap-[8px]">
+
+      <button mat-raised-button
+              class="min-w-[0_!important] p-[0_!importat] w-[50px_!important]"
+              color="primary"
+              type="submit"
+              [disabled]="(formSubmitter.submitDisabled$ | async) || pending">
+              <mat-icon>upgrade</mat-icon>
+      </button>
+
+      <button mat-raised-button
+              class="min-w-[0_!important] p-[0_!importat] w-[50px_!important]"
+              type="button"
+              color="warn"
+              (click)="onCancel()"
+              type="button"
+              [disabled]="pending">
+              <mat-icon>cancel</mat-icon>
+      </button>
+
+    </div>
+  </form>
+
+  <div *ngIf="name === 'aboutMySelf'" class="mask absolute bottom-0 left-0 w-full h-[40%]"></div>
+</div>

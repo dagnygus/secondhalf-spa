@@ -1,0 +1,17 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 400px;
+  min-height: 80vh;
+
+  @media (min-width: 840px) {
+    max-width: 800px;
+  }
+}
+
+form.with-error {
+  grid-template-rows: 1fr 1fr auto 1fr;
+}

@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  overflow: hidden;
+}
+
+app-notification + app-notification {
+  margin-top: 4px;
+
+  @media (min-width: 580px) {
+    margin-top: 8px;
+  }
+}

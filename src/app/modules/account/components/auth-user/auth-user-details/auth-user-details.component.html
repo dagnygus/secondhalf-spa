@@ -1,0 +1,44 @@
+<app-avatar-field class="w-[85%] max-w-[320px] min800:col-[1/2]
+                         min800:self-start min800:justify-self-center
+                         min800:m-[0_16px_0_0]"
+                  [(file)]="file"
+                  (avatarSubmit)="onAvatarFormSubmit($event)"
+                  [imageUrl]="imageUrl"
+                  [avatarPending]="avatarPending$ | async"
+                  [uploadAvatarFailed]="uploadAvatarFailed$ | async"
+                  [@avatar]="'enter_to_small_view' | media:{ '800': 'enter_to_big_view' }"></app-avatar-field>
+
+<app-auth-user-field-list class="justify-self-stretch min800:col-[2/3] max-[799px]:mt-[24px]
+                                 min800:row-[1/4] min800:self-start min800:mr-[16px]"
+                          [fieldNames]="fieldNames"
+                          [labels]="labels"
+                          [controls]="controls"
+                          [pendingFieldName]="pendingFieldName$ | async"
+                          (detailSubmit)="onDetailSubmit($event)"
+                          (detailCancel)="onDetailCancel()"
+                          [@authUser]="'enter_to_small_view' | media:{ '800': 'enter_to_big_view' }"></app-auth-user-field-list>
+
+<ng-template [ngIf]="hasAddressInfo$ | async | assert | equels:false" [ngIfElse]="addressInfoTemplate">
+  <div class="m-[16px] min800:col-[1/2] min800:self-start min800:m-[16px_16px_16px_16px]
+              min800:translate-x-[-16px]">
+    <mat-checkbox @checkbox [value]="addAddressInfomation$ | async | toString"
+                  (change)="addAddressInfomation$.next($event.checked)">Add address information</mat-checkbox>
+  </div>
+  <app-address-info-form  class="w-full max-w-[400px] min800:col-[1/2] min800:self-start min800:justify-self-center px-[16px]"
+                          *ngIf="addAddressInfomation$ | async"
+                          (addressFormSubmited)="onAddressFormSubmited($event)"></app-address-info-form>
+</ng-template>
+
+<ng-template #addressInfoTemplate>
+
+  <app-auth-user-field-list class="justify-self-stretch min800:m-[28px_12px_0_0] min800:col-[1/2]
+                                   min800:self-start"
+                            [fieldNames]="addressFieldNames"
+                            [labels]="labels"
+                            [controls]="controls"
+                            [pendingFieldName]="pendingFieldName$ | async"
+                            (detailSubmit)="onDetailSubmit($event)"
+                            (detailCancel)="onDetailCancel()"
+                            [@authAddressInfo]="'enter_to_small_view' | media:{ '800': 'enter_to_big_view' }"></app-auth-user-field-list>
+
+</ng-template>

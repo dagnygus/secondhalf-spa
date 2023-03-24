@@ -1,0 +1,37 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  padding: 32px;
+  display: block;
+
+  @media (min-width: 900px) {
+    padding: 32px 64px;
+  }
+}
+
+.privacy__container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+hr {
+  border-top-color: mat.$primary-color;
+}
+
+blockquote {
+  border-left: 1px solid mat.$primary-color;
+  margin-left: 0;
+  padding-left: 32px;
+}
+
+ol > li:not(:last-child), ul > li:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.privacy__upward-btn {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 100;
+}

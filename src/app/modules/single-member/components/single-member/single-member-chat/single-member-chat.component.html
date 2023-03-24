@@ -1,0 +1,37 @@
+<ng-container *ngIf="isAuth; else unauthTemplate">
+  <ng-container [ngSwitch]="chatStatus">
+
+    <app-single-member-chat-clouds class="row-[1/2] col-[1/2] mat-elevation-z6"
+                                    [messages]="messages"></app-single-member-chat-clouds>
+
+    <ng-template [ngSwitchCase]="StateStatus.pending">
+      <app-loading-spinner class="row-[1/2] col-[1/2] w-[100px] h-[100px] place-self-center"></app-loading-spinner>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="StateStatus.empty">
+      <div class="flex items-center justify-center justify-self-stretch
+                  col-[1/2] row-[1/2] self-stretch px-[16px] mat-elevation-z6">
+        <span>Write your first message to <span class="color-primary">{{ memberNickName }}</span></span>
+      </div>
+    </ng-template>
+
+
+  </ng-container>
+
+  <app-single-member-chat-textbox-entry [(value)]="messageToSend"
+                                        (send)="send.emit($event)"
+                                        [disabled]="chatStatus === StateStatus.pending || sendingStatus === ActionStatus.awaiting"
+                                        class="mat-elevation-z6"></app-single-member-chat-textbox-entry>
+</ng-container>
+
+<ng-template #unauthTemplate>
+  <div class="min-h-[80vh] flex flex-col justify-center gap-[16px] w-[100%] ">
+    <p class="text-center px-[16px]">
+      You neet to be register to communicate with our member.
+    </p>
+    <div class="grid grid-flow-col auto-cols-fr content-center gap-[4px]">
+      <a routerLink="/signin" mat-raised-button color="primary">Login</a>
+      <a routerLink="/signup" mat-raised-button color="primary">Register</a>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,41 @@
+<div class="row-[1/2] col-[1/2] grid grid-cols-[1fr_auto_auto] mat-elevation-z2">
+  <div class="col-[1/-1] row-[1/2] flex justify-center items-center text-center text-[24px]">
+    <span>{{ memberNickName }}</span>
+  </div>
+  <div class="col-[1/2] row-[1/2] relative w-[60px] before:block before:content-[''] before:pb-[100%] z-10">
+    <img [src]="imageUrl | mainImageUrl"
+         alt="user_image"
+         class="absolute top-0 left-0 w-full h-full rounded-[50%] object-cover
+                origin-center scale-125 translate-x-[-5px] border-2 border-white">
+  </div>
+  <div class="row-[1/2] col-[2/3] flex justify-center items-center mr-[8px]">
+    <button mat-mini-fab (click)="onClose.next()"><mat-icon>cancel</mat-icon></button>
+  </div>
+</div>
+
+<ng-container [ngSwitch]="chatStatus">
+
+  <app-chat-dialog-clouds class="row-[2/3] col-[1/2]"
+                                  [messages]="messages"
+                                  ></app-chat-dialog-clouds>
+
+  <ng-template [ngSwitchCase]="StateStatus.pending">
+    <app-loading-spinner class="row-[2/3] col-[1/2] w-[100px] h-[100px] place-self-center"></app-loading-spinner>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="StateStatus.empty">
+    <div class="flex items-center justify-center justify-self-stretch
+                col-[1/2] row-[2/3] self-stretch px-[16px]">
+      <span>Write your first message to <span class="color-primary">{{ memberNickName }}</span></span>
+    </div>
+  </ng-template>
+
+
+</ng-container>
+
+<app-chat-dialog-textbox-entry [(value)]="messageToSend"
+                                      (send)="onSend.next($event)"
+                                      [disabled]="chatStatus === StateStatus.pending || sendingStatus === ActionStatus.awaiting"
+                                      class="row-[3/4] cols-[1/2] shadow-[0px_-4px_15px_-6px_rgba(66,68,90,1)]"></app-chat-dialog-textbox-entry>
+
+

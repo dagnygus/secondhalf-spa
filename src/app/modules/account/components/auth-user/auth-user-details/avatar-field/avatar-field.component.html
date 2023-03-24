@@ -1,0 +1,35 @@
+
+<div class="overflow-hidden relative rounded-[12px] shadow-[3px_3px_6px_2px_rgba(0,_0,_0,_1)]
+            before:content-[''] before:block before:float-left before:pb-[100%]">
+  <img [src]="fileData ?? imageUrl | mainImageUrl"
+        alt="avatar_picture"
+        class="absolute w-full h-full top-0 left-0 object-cover">
+</div>
+
+<form ngFrom (ngSubmit)="filePicker.value && avatarSubmit.emit(filePicker.value)">
+  <app-file-picker-input #filePicker
+                          name="avatar"
+                          class="grid grid-flow-col gap-[8px] mt-[16px]"
+                          readDataUrl
+                          [(value)]="file"
+                          (fileDataUrl)="fileData = $event"
+                          accept="image/jpg, image/png, image/gif, image/bmp, image/jpeg">
+
+      <button mat-raised-button color="accent" type="button" (click)="filePicker.pickFile()"
+              class="avatar-btn" [style.display]="fileData ? 'none' : ''" >Add picture</button>
+      <button mat-raised-button color="primary" type="submit"
+              class="avatar-btn" [style.display]="fileData ? '' : 'none'" >Save</button>
+      <button mat-raised-button color="accent" type="button" (click)="filePicker.removeFile()"
+              class="avatar-btn" [disabled]="!fileData">Remove</button>
+
+  </app-file-picker-input>
+</form>
+
+<div *ngIf="avatarPending || filePicker.loading"
+      class="flex absolute items-center justify-center w-full h-full top-0 left-0 bg-[rgba(0,0,0,.32)]">
+  <app-loading-spinner class="w-[100px] h-[100px]"></app-loading-spinner>
+</div>
+<div *ngIf="uploadAvatarFailed"
+      class="flex absolute items-center justify-center w-full h-full top-0 left-0 color-warn bg-[rgba(0,0,0,.32)]">
+  <span class="text-[20px] font-semibold"><mat-icon>warning</mat-icon> Failed to upload image!</span>
+</div>

@@ -1,0 +1,53 @@
+<form class="grid min-h-[85vh] grid-rows-[1fr_auto_1fr]"
+      [formGroup]="formGroup"
+      [class.with-error]="error$ | async"
+      (ngSubmit)="onSubmit()"
+      @form>
+
+  <div class="text-center self-end" @formHeader>
+    <p class="mb-[32px]"
+       [class.with-error]="true">Complete the form to Sign-In. If you not have account, please <a routerLink="/signup">register</a>.</p>
+  </div>
+
+  <div *ngIf="error$ | async as error"
+       class="border border-red-400 text-[14px] color-warn rounded-[16px] place-self-center
+              w-[95%] p-[16px_8px] mb-[16px] text-center mat-elevation-z6">
+    <ng-container [ngSwitch]="error.code">
+      <span *ngSwitchCase="'auth/wrong-password'">
+        Failed to sign in. Wrong password.
+      </span>
+      <span *ngSwitchCase="'auth/user-not-found'">
+        E-mail address "{{ currentWrittenEmail }}" is not registered!
+      </span>
+      <span *ngSwitchDefault>
+        An internal server error accour. Please try again later.
+      </span>
+    </ng-container>
+  </div>
+
+
+  <div class="grid gap-[16px]">
+    <mat-form-field floatLabel="auto" appearance="fill" color="accent">
+      <mat-label>Address E-mail</mat-label>
+      <input matInput type="text" name="email" formControlName="email" inputmode="email" async-validation-on-blur>
+      <mat-error *appFirstKeyOf="formGroup.controls.email.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+    <mat-form-field floatLabel="auto" appearance="fill" color="accent">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="passwordHidden ? 'password' : 'text'" name="password" formControlName="password">
+      <button type="button" mat-icon-button tabindex="-1" matSuffix (click)="passwordHidden = !passwordHidden">
+        <mat-icon>
+          {{ passwordHidden ? 'visibility'  : 'visibility_off' }}
+        </mat-icon>
+      </button>
+      <mat-error *appFirstKeyOf="formGroup.controls.password.errors; let error">{{ error }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="grid grid-flow-col auto-cols-fr gap-[8px] mt-[16px] self-start" @btnGroup>
+    <button type="submit" mat-raised-button color="primary" [disabled]="submitDisabled$ | async"
+            class="py-[8px_!important]">Sign-In</button>
+    <button class="py-[8px_!important]" type="button" mat-raised-button color="warn">Cancel</button>
+  </div>
+</form>
+

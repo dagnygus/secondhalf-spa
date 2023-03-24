@@ -1,0 +1,41 @@
+<form [formGroup]="formGroup" class="grid w-[100%] h-[100%] strong-form" (ngSubmit)="onSubmit()">
+
+  <div *ngIf="error$ | async as error"
+       class="text-[14px] color-warn bg-[rgba(255,255,255,.66)] border border-red-400
+              place-self-center p-[16px_8px] mb-[16px] text-center rounded-[16px]
+              w-[95%] z-10 mat-elevation-z6"
+       @errorBox>
+    <ng-container [ngSwitch]="error.code">
+      <span *ngSwitchCase="'auth/wrong-password'">
+        Failed to sign in. Wrong password.
+      </span>
+      <span *ngSwitchCase="'auth/user-not-found'">
+        E-mail address "{{ currentWrittenEmail }}" is not registered!
+      </span>
+      <span *ngSwitchDefault>
+        An internal server error accour. Please try again later.
+      </span>
+    </ng-container>
+  </div>
+
+  <mat-form-field floatLabel="auto" appearance="fill" color="primary" @firstInput>
+    <mat-label>Address E-Mail</mat-label>
+    <input matInput type="text" name="email" formControlName="email" inputmode="email" async-validation-on-blur>
+    <mat-error *appFirstKeyOf="formGroup.controls.email.errors; let error">{{ error }}</mat-error>
+  </mat-form-field>
+  <mat-form-field floatLabel="auto" appearance="fill" color="primary" @secondInput>
+    <mat-label>Password</mat-label>
+    <input matInput [type]="passwordHidden ? 'password' : 'text'" name="password" formControlName="password">
+    <button type="button" mat-icon-button matSuffix (click)="passwordHidden = !passwordHidden">
+      <mat-icon>
+        {{ passwordHidden ? 'visibility'  : 'visibility_off' }}
+      </mat-icon>
+    </button>
+    <mat-error *appFirstKeyOf="formGroup.controls.password.errors; let error">{{ error }}</mat-error>
+  </mat-form-field>
+  <div class="grid grid-flow-col auto-cols-fr gap-[8px]" @btnsWrapper>
+    <button mat-raised-button color="primary"
+            [disabled]="submitDisabled$ | async">Sign-in</button>
+    <a mat-raised-button color="warn" routerLink="/signup">Register</a>
+  </div>
+</form>

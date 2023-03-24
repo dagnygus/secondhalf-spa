@@ -1,0 +1,31 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  padding: 32px;
+}
+
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-indent: initial;
+  width: 100%;
+  vertical-align: baseline;
+}
+
+tbody {
+  vertical-align: baseline;
+}
+
+th, td {
+  width: 50%;
+  text-align: left;
+  border: 1px solid mat.$primary-color;
+  padding: 8px;
+}
+
+
+blockquote {
+  border-left: 1px solid mat.$primary-color;
+  margin-left: 0;
+  padding-left: 32px;
+}

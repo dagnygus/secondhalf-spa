@@ -1,0 +1,14 @@
+
+<div class="w-full flex flex-col">
+  <div *ngFor="let message of messages"
+        class="max-w-[70%] text-white p-[8px]"
+        [class.cloud]="authUserId !== message.ownerID"
+        [class.own-cloud]="authUserId === message.ownerID"
+        [class.bg-gr-primary]="authUserId === message.ownerID"
+        [class.bg-gr-accent]="authUserId !== message.ownerID">
+        <span class="single-member-chat-clouds__message-content"
+              [class.single-member-chat-clouds__own-message-content]="authUserId === message.ownerID">
+              {{ message.content }}
+        </span>
+  </div>
+</div>

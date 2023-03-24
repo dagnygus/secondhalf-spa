@@ -1,0 +1,272 @@
+// @use '@angular/material' as mat;
+// @use './app/my-package/stylesheets' as *;
+@use './mat-theme/abstract/math-abs' as *;
+@use './mat-theme/components/math-comp' as *;
+@use '../node_modules/keen-slider/keen-slider.min.css';
+@use './font-families' as *;
+@use './tailwind/tailwind.scss' as *;
+
+// // Custom Theming for Angular Material
+// // For more information: https://material.angular.io/guide/theming
+// // Plus imports for other components in your app.
+
+// // Include the common styles for Angular Material. We include this here so that you only
+// // have to load a single css file for Angular Material in your app.
+// // Be sure that you only ever include this mixin once!
+// @include mat.core();
+
+// // Define the palettes for your theme using the Material Design palettes available in palette.scss
+// // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// // hue. Available color palettes: https://material.io/design/color/
+// $secondhalf-spa-primary: mat.define-palette(mat.$deep-purple-palette, A700);
+// $secondhalf-spa-accent: mat.define-palette(mat.$pink-palette, A200);
+
+// // The warn palette is optional (defaults to red).
+// $secondhalf-spa-warn: mat.define-palette(mat.$red-palette);
+
+// // Create the theme object. A theme consists of configurations for individual
+// // theming systems such as "color" or "typography".
+// $secondhalf-spa-theme: mat.define-light-theme((
+//   color: (
+//     primary: $secondhalf-spa-primary,
+//     accent: $secondhalf-spa-accent,
+//     warm: $secondhalf-spa-warn
+//   )
+// ));
+
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// @include mat.all-component-themes($secondhalf-spa-theme);
+
+// @import url(../node_modules/@fortawesome/fontawesome-free/css/all.min.css);
+
+// $color-config: mat.get-color-config($secondhalf-spa-theme);
+// $primary-color-palette: map-get($color-config, 'primary');
+// $accent-color-palette: map-get($color-config, 'accent');
+// $warn-color-palette: map-get($color-config, 'warn');
+
+// $primary-color: mat.get-color-from-palette($primary-color-palette);
+// $accent-color: mat.get-color-from-palette($accent-color-palette);
+// $warn-color: mat.get-color-from-palette($warn-color-palette);
+
+// $primary-gradient: linear-gradient(to bottom right, lighten($primary-color, 20%), darken($primary-color, 20%));
+// $accent-gradient: linear-gradient(to bottom right, lighten($accent-color, 10%), darken($accent-color, 20%));
+// $warn-gradient: linear-gradient(to bottom right, lighten($warn-color, 10%), darken($warn-color, 20%));
+
+@debug $primary-color;
+@debug $accent-color;
+
+@mixin create-mat-backgrounds($primary, $accent, $warn) {
+  .bg-primary {
+    background-color: $primary;
+  }
+
+  .bg-accent {
+    background-color: $accent;
+  }
+
+  .bg-warn {
+    background-color: $warn;
+  }
+}
+
+@include create-mat-backgrounds(
+  $primary-color,
+  $accent-color,
+  $warn-color
+);
+* {
+  box-sizing: border-box;
+}
+
+
+html, body { height: 100%; max-width: 100vw; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  display: block;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter';
+  font-weight: 400;
+  background-color: #efefef;
+  overflow-x: hidden;
+}
+
+route-outlet {
+  display: none;
+}
+
+.page-container {
+  display: grid;
+  align-items: start;
+  overflow: hidden;
+}
+
+.page-component {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.clickable:active {
+  animation: clickable-animation 300ms ease-out;
+}
+
+.firebase-emulator-warning {
+  display: none
+}
+
+.mat-mdc-button:active:not([ng-reflect-disable-ripple="true"]):not(:disabled),
+.mat-raised-button:active:not([ng-reflect-disable-ripple="true"]):not(:disabled),
+.mat-mdc-icon-button:active:not([ng-reflect-disable-ripple="true"]):not(:disabled),
+.mat-mdc-stroked-button:active:not([ng-reflect-disable-ripple="true"]):not(:disabled),
+.mat-mdc-flat-button:active:not([ng-reflect-disable-ripple="true"]):not(:disabled),
+.mat-mdc-fab:active:not([ng-reflect-disable-ripple="true"]):not(:disabled),
+.mat-mdc-mini-fab:active:not([ng-reflect-disable-ripple="true"]):not(:disabled) {
+  animation: clickable-animation 300ms ease-out !important;
+}
+
+button, a {
+  font-size: 1em !important;
+}
+
+.bg-gr-primary {
+  background-image: $primary-gradient;
+}
+
+.bg-gr-accent {
+  background-image: $accent-gradient;
+}
+
+.bg-gr-warn {
+  background-image: $warn-gradient;
+}
+
+.bg-primary {
+  background-color: $primary-color;
+}
+
+.bg-accent {
+  background-color: $accent-color;
+}
+
+.bg-warn {
+  background-color: $warn-color;
+}
+
+.color-primary {
+  color: $primary-color;
+}
+
+.color-warn {
+  color: $warn-color
+}
+
+.color-accent {
+  color: $accent-color;
+}
+
+.border-primary {
+  border-color: $primary-color;
+}
+
+.border-accent {
+  border-color: $accent-color;
+}
+
+.border-warn {
+  border-color: $warn-color;
+}
+
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+button.mat-mdc-raised-button:disabled {
+  background-color: #efefef !important;
+  background-image: none !important;
+}
+
+.mat-mdc-flat-button.mat-primary, .mat-mdc-raised-button.mat-primary, .mat-mdc-fab.mat-primary, .mat-mdc-mini-fab.mat-primary {
+  background-color: transparent !important;
+  background-image: $primary-gradient !important;
+}
+
+.mat-mdc-flat-button.mat-accent, .mat-mdc-raised-button.mat-accent, .mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {
+  background-color: transparent !important;
+  background-image: $accent-gradient !important;
+}
+
+.mat-mdc-flat-button.mat-warn, .mat-mdc-raised-button.mat-warn, .mat-mdc-fab.mat-warn, .mat-mdc-mini-fab.mat-warn {
+  background-color: transparent !important;
+  background-image: $warn-gradient !important;
+}
+
+
+form {
+
+  .mdc-text-field {
+    background-color: rgba($color: $primary-color, $alpha: 0.22) !important;
+    box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+  }
+
+}
+
+form.strong-form {
+  .mdc-text-field {
+    background-color: rgba($color: $accent-color, $alpha: 0.7) !important;
+    box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+  }
+}
+
+.auth-modal-panel {
+  max-width: 400px !important;
+  width: 80vw !important;
+}
+
+.picture-aspect-ratio {
+  padding-bottom: calc((4 / 3) * 100%);
+}
+
+.circural-picture {
+  padding-bottom: 100%;
+  border-radius: 50%;
+}
+
+.pe-none {
+  pointer-events: none;
+}
+
+.pe-all {
+  pointer-events: all;
+}
+
+.calendar {
+  background-color: white;
+  border-radius: 8px;
+  width: 95vw;
+  max-width: 400px;
+  margin: 0 24px;
+}
+
+// app-single-member-chat .mat-form-field-appearance-outline .mat-form-field-outline {
+//   background-color: white !important;
+//   overflow: hidden;
+//   border-radius: 6px;
+// }
+
+mat-error {
+  font-size: 12px;
+}
+
+@keyframes clickable-animation {
+  0% {
+    transform: scale(0.9)
+  }
+  100% {
+    transform: scale(1);
+  }
+}

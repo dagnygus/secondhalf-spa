@@ -1,0 +1,25 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 10px;
+  width: 100%;
+  z-index: 1000;
+}
+
+.router-loading-indicator__loading-item {
+  background-image: linear-gradient(to right, mat.$accent-color, mat.$primary-color, mat.$accent-color);
+  animation: 1.5s ease-in-out infinite alternate loading-item-animation;
+}
+
+@keyframes loading-item-animation {
+  0% {
+    transform: translateX(0)
+  }
+  100% {
+    transform: translate(-50%);
+  }
+}

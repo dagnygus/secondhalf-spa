@@ -1,0 +1,9 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  display: block;
+}
+
+.header__title {
+  text-shadow: 1px 1px 12px mat.$primary-color;
+}

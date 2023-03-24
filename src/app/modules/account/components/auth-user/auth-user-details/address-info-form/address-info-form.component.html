@@ -1,0 +1,27 @@
+<form class="grid justify-self-center w-full" [formGroup]="formGroup" (ngSubmit)="formSubmitter.trySubmit()" @form>
+  <mat-form-field appearance="fill" color="accent">
+    <mat-label>City</mat-label>
+    <input type="text" matInput formControlName="city" name="city">
+    <mat-error *appFirstKeyOf="formGroup.controls.city.errors; let error">{{ error.message }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill" color="accent">
+    <mat-label>Street</mat-label>
+    <input type="text" matInput formControlName="street" name="street">
+    <mat-error *appFirstKeyOf="formGroup.controls.street.errors; let error">{{ error.message }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill" color="accent">
+    <mat-label>State</mat-label>
+    <input type="text" matInput formControlName="state" name="state">
+    <mat-error *appFirstKeyOf="formGroup.controls.state.errors; let error">{{ error.message }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill" color="accent">
+    <mat-label>Country</mat-label>
+    <input type="text" matInput formControlName="country" name="country">
+    <mat-error *appFirstKeyOf="formGroup.controls.country.errors; let error">{{ error.message }}</mat-error>
+  </mat-form-field>
+  <div class="grid grid-flow-col mb-[16px] gap-[8px]" @btnGroup>
+    <button mat-raised-button class="padding-4" color="primary" type="submit"
+            [disabled]="formSubmitter.submitDisabled$ | async">Save</button>
+    <button mat-raised-button class="padding-4" color="warn" type="button">Cancel</button>
+  </div>
+</form>

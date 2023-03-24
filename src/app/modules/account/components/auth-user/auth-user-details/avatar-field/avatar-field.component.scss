@@ -1,0 +1,40 @@
+@use 'src/mat-theme/abstract/math-abs' as mat;
+
+:host {
+  position: relative;
+  // width: 85%;
+  padding: 16px;
+  box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 1);
+  border-radius: 16px;
+  // max-width: 320px;
+  overflow: hidden;
+  background-image: mat.$primary-gradient;
+  // @media (min-width: $breakpoint) {
+  //   grid-column: 1 / span 1;
+  //   align-self: start;
+  //   margin: 16px 0 0  16px;
+  //   justify-self: center;
+  //   transform: translateX(-16px);
+  // }
+}
+
+:host(app-avatar-field) {
+  position: relative;
+  // width: 85%;
+  padding: 16px;
+  box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 1);
+  border-radius: 16px;
+  // max-width: 320px;
+  overflow: hidden;
+  // @media (min-width: $breakpoint) {
+  //   grid-column: 1 / span 1;
+  //   align-self: start;
+  //   margin: 16px 0 0  16px;
+  //   justify-self: center;
+  //   transform: translateX(-16px);
+  // }
+}
+
+button[mat-raised-button].avatar-btn {
+  box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 1) !important;
+}

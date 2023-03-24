@@ -1,0 +1,67 @@
+@use 'src/mat-theme/abstract/math-abs' as mat;
+
+:host {
+  display: grid;
+  grid-template-columns: 23% 1fr;
+}
+
+.notification__head {
+  position: relative;
+  margin: 2px;
+}
+
+.notification__head:before {
+  display: block;
+  content: '';
+  padding-bottom: 100%;
+}
+
+.notification__avatar-img {
+  position: absolute;
+  object-fit: cover;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%
+}
+
+.message-notification__tail {
+  text-align: left;
+  display: grid;
+  grid-auto-rows: 1fr;
+  padding: 6px 6px;
+}
+
+.notification__tail {
+  text-align: left;
+  display: grid;
+  align-items: center;
+  padding: 6px 6px;
+}
+
+.message-notification__info {
+  align-self: start;
+  grid-row: 1 / span 2;
+}
+
+.message-notification__content {
+  align-self: end;
+}
+
+
+.notification__icon {
+  bottom: 20px;
+  right: 20px;
+  // color: mat.$accent-color;
+  font-size: 48px;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.43);
+}
+
+.notification__message-content-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 65vw;
+  text-decoration: underline;
+}

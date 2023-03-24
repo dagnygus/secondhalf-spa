@@ -1,0 +1,37 @@
+<div class="grid grid-flow-col auto-cols-fr mx-auto my-[16px] gap-[8px] w-full max-w-[620px]">
+  <app-camera-picture-input #camera
+                            (accept)="pictureAccepted.emit($event)"
+                            shutterSoundEffectUrl="assets/camera_picture_sound_effect.mp3">
+    <button mat-raised-button color="primary" class="w-full" (click)="camera.turnOnCamera()">
+      <mat-icon>add_a_photo</mat-icon> Make Picture
+    </button>
+  </app-camera-picture-input>
+  <app-multi-file-picker-input accept="image/*"
+                              #filePicker
+                              [(value)]="files"
+                              readDataUrl
+                              (fileDataUrls)="filesData = $event">
+    <button mat-raised-button color="primary" class="w-full" (click)="filePicker.pickFiles()">
+      <mat-icon>image</mat-icon> Add new picture
+    </button>
+  </app-multi-file-picker-input>
+</div>
+
+<div class="flex flex-col items-center accent-border"
+      *ngIf="filesData"
+      #itemsContainer
+      [@itemsContainer]="{ value: itemsContainerAnimationState, params: { itsHeight: itemsContainer.clientHeight} }">
+
+  <button class="w-full max-w-[340px] mb-[32px]" mat-raised-button color="accent" (click)="imagesAccepted.emit(filePicker.value!)">
+    <mat-icon>image</mat-icon> Upload
+  </button>
+
+  <!-- <div class="new-photos__item" *ngFor="let fileData of filesData; let i = index" @newPhoto>
+    <app-new-photo [imageUrl]="fileData"
+                    (cancel)="filePicker.removeFile(i)"></app-new-photo>
+  </div> -->
+
+  <app-new-photo-list class="w-full"
+                      [filesData]="filesData"
+                      (cancel)="filePicker.removeFile($event)"></app-new-photo-list>
+</div>

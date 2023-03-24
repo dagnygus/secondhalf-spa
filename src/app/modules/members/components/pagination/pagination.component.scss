@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+@use 'src/mat-theme/abstract/math-abs' as my-mat;
+
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination__btn-group {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 4px;
+  grid-auto-columns: 1fr;
+}
+
+.pagination__elispis {
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  @include mat.elevation(4);
+  border-radius: 4px;
+  color: black;
+  text-decoration: none;
+}
+
+.pagination__btn.active {
+  color: my-mat.$accent-color;
+  background-color: my-mat.$primary-color;
+  border: 2px solid my-mat.$accent-color;
+  font-weight: 600;
+}

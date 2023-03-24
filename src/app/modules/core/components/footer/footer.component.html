@@ -1,0 +1,67 @@
+<nav class="grid grid-cols-2 min640:grid-cols-3 min870:grid-cols-4">
+  <div>
+    <h1 class="text-[20px] my-[16px] text-center font-semibold">SAFETY</h1>
+      <ul class="footer__nav-list list-none p-0 flex flex-col items-center text-[0.9rem_!important]">
+        <li>
+          <a mat-button color="primary" routerLink="community-guidelines">Community Guidlines</a>
+        </li>
+        <li>
+          <a mat-button color="primary" routerLink="safety-tips">Safety Tips</a>
+        </li>
+        <li>
+          <a mat-button color="primary" routerLink="safety-and-policy">Safety & Policy</a>
+        </li>
+        <li>
+          <a mat-button color="primary" [routerLink]="null">Safety & Reposting</a>
+        </li>
+        <li>
+          <a mat-button color="primary" [routerLink]="null">Security</a>
+        </li>
+      </ul>
+  </div>
+  <div>
+    <h2 class="text-[20px] my-[16px] text-center font-semibold">LEGAL</h2>
+      <ul class="footer__nav-list list-none p-0 flex flex-col items-center text-[0.9rem_!important]">
+        <li>
+          <a mat-button color="primary" routerLink="privacy">Privacy</a>
+        </li>
+        <li>
+          <a mat-button color="primary" routerLink="terms">Terms</a>
+        </li>
+        <li>
+          <a mat-button color="primary" routerLink="cookie-policy">Cookie Policy</a>
+        </li>
+        <li>
+          <a mat-button color="primary" routerLink="intellectual-property">Intellectual Property</a>
+        </li>
+      </ul>
+  </div>
+  <div>
+    <h2 class="text-[20px] my-[16px] text-center font-semibold">CAREERS</h2>
+      <ul class="footer__nav-list list-none p-0 flex flex-col items-center text-[0.9rem_!important]">
+        <li>
+          <a mat-button color="primary" [routerLink]="null">Careers Portal</a>
+        </li>
+        <li>
+          <a mat-button color="primary" [routerLink]="null">Tech Blog</a>
+        </li>
+      </ul>
+  </div>
+  <div class="footer__social-item">
+    <h2 class="text-[20px] my-[16px] text-center font-semibold">SOCIAL</h2>
+    <ul class="list-none p-0 grid gap-0 justify-center items-center grid-cols-[auto_auto] min640:max870:grid-cols-[auto_auto_auto_auto] min640:max870:gap-[8px] min640:max870:mb-[32px]">
+      <li class="footer__social-item-container">
+        <a [routerLink]="null" class="footer__social-link-item footer__facebook-item"></a>
+      </li>
+      <li class="footer__social-item-container">
+        <a [routerLink]="null" class="footer__social-link-item footer__tweeter-item"></a>
+      </li>
+      <li class="footer__social-item-container">
+        <a [routerLink]="null" class="footer__social-link-item footer__tiktok-item"></a>
+      </li>
+      <li class="footer__social-item-container">
+        <a [routerLink]="null" class="footer__social-link-item footer__youtube-item"></a>
+      </li>
+    </ul>
+  </div>
+</nav>

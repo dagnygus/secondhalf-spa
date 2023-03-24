@@ -1,0 +1,23 @@
+@use 'src/mat-theme/abstract/colors' as *;
+
+:host, :host(app-new-photo-list) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 8px;
+
+
+
+  @media (min-width: 500px) {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+.photo-container {
+  border: 2px solid $primary-color;
+}

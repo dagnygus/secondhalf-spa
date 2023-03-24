@@ -1,0 +1,10 @@
+<header class="app-header">
+  <app-header></app-header>
+</header>
+<main #main class="page-container" [@parrentOutlet]="outlet.isActivated ? outlet.activatedRoute : ''">
+  <router-outlet #outlet="outlet"></router-outlet>
+</main>
+<footer class="app-footer">
+  <app-footer></app-footer>
+</footer>
+<app-router-loading-indicator class="mat-elevation-z10" *ngIf="isNavigating$ | async"></app-router-loading-indicator>

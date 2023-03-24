@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  padding: 0 32px;
+}
+
+.intelectual-property__container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+ol > li:not(:last-child), ul > li:not(:last-child) {
+  margin-bottom: 8px;
+}

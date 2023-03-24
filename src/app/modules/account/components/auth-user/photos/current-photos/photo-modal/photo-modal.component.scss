@@ -1,0 +1,7 @@
+:host {
+  width: min(95vw, 60vh);
+  display: grid;
+  gap: 4px;
+
+  grid-template-rows: 1fr auto;
+}

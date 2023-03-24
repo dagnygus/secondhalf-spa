@@ -1,0 +1,47 @@
+<ng-container [ngSwitch]="imageStateStatus">
+
+  <ng-template [ngSwitchCase]="StateStatus.complete">
+
+    <app-images-banner [urls]="urls | assert" class="col-[1/-1] row-[1/2] mat-elevation-z3"></app-images-banner>
+
+    <button mat-fab color="accent"
+            class="row-[1/2] col-[1/3] self-center justify-self-start mx-[16px]"
+            [disabled]="prevButtonDisabled"
+            (click)="onPrevBtnClick()">
+      <mat-icon>
+        arrow_back
+      </mat-icon>
+    </button>
+    <button mat-fab color="accent"
+            class="row-[1/2] col-[3/5] self-center justify-self-end mx-[16px]"
+            (click)="onNextBtnClick()"
+            [disabled]="nextButtonDisabled">
+      <mat-icon>
+        arrow_forward
+      </mat-icon>
+    </button>
+
+    <app-images-selector [urls]="urls | assert" class="col-[1/-1] row-[2/3]"></app-images-selector>
+
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="StateStatus.pending">
+    <div class="col-[1/-1] row-[1/2] placeholder"></div>
+    <div class="col-[1/2] row-[2/3] placeholder"></div>
+    <div class="col-[2/3] row-[2/3] placeholder"></div>
+    <div class="col-[3/4] row-[2/3] placeholder"></div>
+    <div class="col-[4/5] row-[2/3] placeholder"></div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="StateStatus.empty">
+    <div class="row-[1/-1] col-[1/-1] h-[80vh] flex flex-col justify-center items-center text-center">
+      <mat-icon class="color-primary origin-[center_bottom] scale-[4]">
+        sentiment_dissatisfied
+      </mat-icon>
+      <span class="color-accent">
+        This user has no pictures to display.
+      </span>
+    </div>
+  </ng-template>
+
+</ng-container>

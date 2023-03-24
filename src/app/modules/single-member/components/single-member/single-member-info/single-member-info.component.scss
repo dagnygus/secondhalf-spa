@@ -1,0 +1,38 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+
+:host {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+.single-member__label {
+  color: mat.$primary-color;
+}
+
+.single-member-info__single-info-container {
+  background-color: rgba($color: mat.$accent-color, $alpha: 0.42);
+  gap: 16px;
+  padding: 8px 32px;
+  width: 95%;
+  font-size: clamp(16px, 4vw, 18px);
+  max-width: 380px;
+
+  @media (min-width: 560px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 18px;
+  }
+}
+
+.single-member-info__about-info-container {
+  @extend .single-member-info__single-info-container;
+
+  max-width: unset;
+}
+
+.single-member__about-label-container {
+  text-align: center;
+}

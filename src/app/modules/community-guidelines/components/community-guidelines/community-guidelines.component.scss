@@ -1,0 +1,10 @@
+@use 'src/mat-theme/abstract/colors' as mat;
+:host {
+  display: block;
+  padding: 32px;
+}
+
+hr {
+  border-top-color: mat.$primary-color;
+  margin: 32px 0;
+}

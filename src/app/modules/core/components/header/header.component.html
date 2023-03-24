@@ -1,0 +1,78 @@
+<!-- <div class="relative h-[74vh] overflow-hidden">
+  <app-background-carousel class="absolute top-0 left-0 w-[100%] h-[100%]" @carousel1></app-background-carousel>
+  <app-dynamic-background class="absolute top-0 left-0 w-[100%] h-[100%]"></app-dynamic-background>
+  <app-background-carousel class="absolute top-[2.5%] left-[2.5%] w-[95%] h-[95%] opacity-[.7]" @carousel2></app-background-carousel>
+  <div class="grid grid-flow-row-dense min580:grid-flow-col-dense min580:grid-cols-2
+              gap-[6px] justify-center content-center w-[80%] h-[100%] max-w-[750px] mx-auto">
+
+    <h1 class="header__title font-['Bodoni'] text-center text-white text-[28px] z-10
+               min580:self-center min580:col-[2/3]"
+        [@title]>Find your second half right now</h1>
+
+    <ng-container *mediaIf="580 else smallViewTmpl">
+      <app-header-sign-in-form *ngIf="!(isAuth$ | async); else authTmpl"
+                                [@authForm]="outlineAnimationState"
+                                class="max580:hidden max-w-[320px] rounded-[16px] outline-offset-[10px] z-10"></app-header-sign-in-form>
+    </ng-container>
+    <ng-template #smallViewTmpl>
+      <div class="grid gap-[12px] justify-self-center min580:hidden" *ngIf="!(isAuth$ | async); else authTmpl">
+        <a routerLink="/signin"
+            mat-raised-button
+            color="accent"
+            class=" px-[16px_!important] py-[22px_!important] mat-elevation-z8 clickable"
+            @loginBtn>
+          <mat-icon>
+            login
+          </mat-icon> Login
+        </a>
+        <a routerLink="/signup"
+            mat-raised-button
+            color="accent"
+            class="px-[16px_!important] py-[22px_!important] mat-elevation-z8 clickable"
+            @registerBtn>
+          <mat-icon>
+            <span class="material-icons-outlined">
+              person_add
+            </span>
+          </mat-icon>
+          Register
+        </a>
+      </div>
+    </ng-template>
+    <ng-template #authTmpl>
+        <div class="grid justify-self-center grid-cols-2 grid-rows-[auto_auto] gap-[4px]">
+          <div class="relative row-[1_/_span_1] col-[1_/_span_2] before:content-['']
+                      before:block before:pb-[100%] before:float-left">
+            <img [appLazyImage]="avatarUrl$ | async |  mainImageUrl"
+                 alt="avatar_image"
+                 class="absolute object-cover w-[80%] h-[80%] rounded-[50%] top-[10%] left-[10%] mat-elevation-z6"
+                 [loadingView]="imgLoadingTmpl">
+              <ng-template appLazyImageLoadingView #imgLoadingTmpl="appLazyImageLoadingView">
+                <div class="flex justify-center items-center absolute w-[80%] h-[80%] top-[10%] left-[10%] rounded-[50%] bg-white mat-elevation-z6">
+                  <app-loading-spinner class="w-[60%] h-[60%]"></app-loading-spinner>
+                </div>
+              </ng-template>
+          </div>
+          <button mat-raised-button
+                  @logoutBtn
+                  color="warn"
+                  (click)="logout()"><mat-icon>logout</mat-icon>Logout</button>
+          <a routerLink="/account/details"
+             mat-raised-button color="primary"
+             @accountBtn><mat-icon>person</mat-icon>Account</a>
+        </div>
+    </ng-template>
+  </div>
+</div> -->
+
+<app-banner [isAuth]="isAuth$ | async | assert"
+            [avatarUrl]="avatarUrl$ | async"
+            [outlineAnimationState]="outlineAnimationState$ | async | assert"
+            (logout)="logout()"></app-banner>
+
+<app-navbar (navSignIn)="onNavSignIn()"
+            (navSignOut)="logout()"
+            [notificationCount]="notificationCount$ | async | assert"
+            [isAuth]="isAuth$ | async | assert"
+            class="justify-self-center w-[100%] h-[100%]"
+            #navbar></app-navbar>
