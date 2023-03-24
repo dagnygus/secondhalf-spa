@@ -15,6 +15,22 @@
   }
 }
 
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 24px 0;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 18px;
+  font-weight: 500;
+}
+
+p {
+  margin: 18px 0;
+}
+
 .products__list {
   display: grid;
   list-style: none;
@@ -85,9 +101,9 @@
   margin: 0;
   padding: 0;
 
-  p {
+  // p {
     // margin-left: 42px;
-  }
+  // }
 }
 
 mat-icon {

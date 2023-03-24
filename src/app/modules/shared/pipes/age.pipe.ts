@@ -1,5 +1,5 @@
-import * as moment from 'moment';
 import { Pipe, PipeTransform } from '@angular/core';
+import { parse, differenceInYears } from 'date-fns';
 
 @Pipe({
   name: 'age'
@@ -7,7 +7,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AgePipe implements PipeTransform {
 
   transform(value: string): number {
-    return moment().diff(moment(value, 'YYYY-MM-DD'), 'years');
+
+    const result = parse(value, 'yyyy-MM-dd', new Date());
+
+    return differenceInYears(new Date(), result);
   }
 
 }
