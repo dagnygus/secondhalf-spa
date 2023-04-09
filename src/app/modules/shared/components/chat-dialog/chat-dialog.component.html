@@ -17,6 +17,7 @@
 
   <app-chat-dialog-clouds class="row-[2/3] col-[1/2]"
                                   [messages]="messages"
+                                  [targetUserId]="targetUserId"
                                   ></app-chat-dialog-clouds>
 
   <ng-template [ngSwitchCase]="StateStatus.pending">

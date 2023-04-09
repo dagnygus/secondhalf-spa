@@ -102,8 +102,6 @@ export class MemberComponent {
     if (breakpointMathced && withChat) {
       this._chatDialogService.openChatDialogOnNextRoute(
         this.member.userId,
-        this.member.nickName,
-        this.member.mainPhotoUrl,
         '(min-width: 580px)'
       );
     }

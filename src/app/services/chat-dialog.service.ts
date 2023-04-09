@@ -72,14 +72,14 @@ export class ChatDialogService implements OnDestroy {
     }
   }
 
-  openChatDialog(userId: string, nickName: string, photoUrl: string | null | undefined): ChatDialogComponent;
-  openChatDialog(userId: string, nickName: string, photoUrl: string | null | undefined, breakpoint: string): ChatDialogComponent | null;
-  openChatDialog(userId: string, nickName: string, photoUrl: string | null | undefined, breakpoint?: string): ChatDialogComponent | null {
+  openChatDialog(userId: string): ChatDialogComponent;
+  openChatDialog(userId: string, breakpoint: string): ChatDialogComponent | null;
+  openChatDialog(userId: string, breakpoint?: string): ChatDialogComponent | null {
     if (breakpoint && !this._breakpointObserver.isMatched(breakpoint)) { return null; }
 
     if (this._componentRef) {
       const instace = this._componentRef.instance;
-      if (instace.targetUserId === userId && instace.memberNickName === nickName && instace.imageUrl === photoUrl) {
+      if (instace.targetUserId === userId) {
         return this._componentRef.instance;
       } else {
         this.closeCurrentDialog();
@@ -94,8 +94,6 @@ export class ChatDialogService implements OnDestroy {
     });
 
     const componentRef = this._componentRef = overlayRef.attach(new ComponentPortal(ChatDialogComponent));
-    componentRef.instance.memberNickName = nickName;
-    componentRef.instance.imageUrl = photoUrl;
     componentRef.instance.targetUserId = userId;
     componentRef.instance.onClose.pipe(take(1)).subscribe(() => this.closeCurrentDialog());
     overlayRef.backdropClick().pipe(
@@ -124,8 +122,8 @@ export class ChatDialogService implements OnDestroy {
     return componentRef.instance;
   }
 
-  openChatDialogOnNextRoute(userId: string, nickName: string, photoUrl: string | null | undefined, breakpoint?: string): void {
-    this._argsToApply = [ userId, nickName, photoUrl, breakpoint ];
+  openChatDialogOnNextRoute(userId: string, breakpoint?: string): void {
+    this._argsToApply = [ userId, breakpoint ];
 
   }
 }

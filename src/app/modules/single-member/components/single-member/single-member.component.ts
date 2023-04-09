@@ -117,6 +117,7 @@ export class SingleMemberComponent extends PageComponent {
   chatStatus$: Observable<StateStatus>;
   sendingMessageStatus$: Observable<AsyncActionStatus>;
   messages$: Observable<readonly MessageModel[]>;
+  memberId$: Observable<string>;
 
 
   showMore = false;
@@ -131,7 +132,6 @@ export class SingleMemberComponent extends PageComponent {
               memberEvents: MemberEvents,
               likeEvents: LikeEvents,
               chatEvents: ChatEvents,
-              breakpointObserver: BreakpointObserver,
               private readonly _changeDetectorRef: ChangeDetectorRef,
               private readonly _chatDialogService: ChatDialogService) {
       super();
@@ -152,6 +152,7 @@ export class SingleMemberComponent extends PageComponent {
           }
         })
       );
+      this.memberId$ = this._store.pipe(select(({ member }) => member.member!.userId))
 
       const fragment = this._activatedRoute.snapshot.fragment;
       switch (fragment) {
@@ -181,8 +182,6 @@ export class SingleMemberComponent extends PageComponent {
   onChat(member: MemberModel): void {
     this._chatDialogService.openChatDialog(
       member.userId,
-      member.nickName,
-      member.mainPhotoUrl,
       this._chatDialogService.singleMemberBreakpoint
     );
   }

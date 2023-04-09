@@ -68,8 +68,6 @@ export class RouterEffects {
             if (this._authStateRef.state.userData) {
               this._chatDialogService.openChatDialogOnNextRoute(
                 member.userId,
-                member.nickName,
-                member.mainPhotoUrl,
                 this._chatDialogService.singleMemberBreakpoint);
             }
             this._router.navigateByUrl(`/member/${member.userId}`, { replaceUrl: true });

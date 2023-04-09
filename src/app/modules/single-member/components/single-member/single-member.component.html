@@ -62,6 +62,7 @@
                                     [chatStatus]="chatStatus$ | async | assert"
                                     [sendingStatus]="sendingMessageStatus$ | async"
                                     [(messageToSend)]="messageToSend"
+                                    [memberId]="memberId$ | async | assert"
                                     (send)="onSendMessage($event)"></app-single-member-chat>
           </mat-tab>
         </mat-tab-group>

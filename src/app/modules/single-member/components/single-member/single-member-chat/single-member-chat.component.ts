@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from 
 import { AsyncActionStatus, StateStatus } from 'src/app/state/utils';
 
 @Component({
-  selector: 'app-single-member-chat[isAuth][memberNickName][chatStatus][sendingStatus][messages][messageToSend]',
+  selector: 'app-single-member-chat[isAuth][memberNickName][chatStatus][sendingStatus][messages][messageToSend][memberId]',
   templateUrl: './single-member-chat.component.html',
   styleUrls: ['./single-member-chat.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,9 +25,10 @@ export class SingleMemberChatComponent {
   }
   @Input() isAuth = false;
   @Input() memberNickName!: string;
+  @Input() memberId!: string
   @Input() chatStatus!: StateStatus;
   @Input() sendingStatus!: AsyncActionStatus | null;
-  @Input() messages!: readonly MessageModel[];
+  @Input() messages: readonly MessageModel[] = null!;
 
 
   @Output() send = new EventEmitter<string>();

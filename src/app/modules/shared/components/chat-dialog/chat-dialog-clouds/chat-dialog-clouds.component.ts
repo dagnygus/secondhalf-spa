@@ -24,7 +24,7 @@ export class ChatDialogCloudsComponent implements OnChanges, DoCheck {
   private _scrolledToBottom = true;
 
   @Input() messages!: readonly MessageModel[]
-  @Input() authUserId!: string;
+  @Input() targetUserId!: string;
 
   constructor(private _el: ElementRef<HTMLElement>,
               @Inject(PLATFORM_ID) private _platformId: object,

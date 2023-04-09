@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { updateUser } from 'src/app/state/auth/auth.actions';
 import { AppState } from 'src/app/app.ngrx.utils';
 import { Store, Action } from '@ngrx/store';
@@ -23,15 +24,29 @@ import { FsUserModelFieldNames } from 'src/app/models/db-models';
 import { isPrevActionTypeOf, StateStatus, isActionTypeOf, AsyncActionStatus } from '../utils';
 
 const getImageName = (imageUrl: string) => {
-  let index = imageUrl.lastIndexOf('%2F') + 3;
-  let imageName = imageUrl.substring(index);
 
-  if (imageName.includes('?')) {
-    index = imageName.indexOf('?');
-    imageName = imageName.substring(0, index);
+  if (environment.funcrtionsEmulator) {
+
+    let index = imageUrl.lastIndexOf('%2F') + 3;
+    let imageName = imageUrl.substring(index);
+
+    if (imageName.includes('?')) {
+      index = imageName.indexOf('?');
+      imageName = imageName.substring(0, index);
+    }
+
+    return imageName;
+  } else {
+
+    const index1 = imageUrl.lastIndexOf('%2F');
+    const index2 = imageUrl.lastIndexOf('?');
+    let name = imageUrl.substring(index1 + 3, index2);
+    if (name.includes('%3A')) {
+        name = (name as any).replaceAll('%3A', ':');
+    }
+    return name;
   }
 
-  return imageName;
 };
 
 @Injectable()
@@ -122,7 +137,7 @@ export class ImageEffects {
         name = authUserData.email;
       }
 
-      const path = `/${authUserData.userId}/images/__${new Date().toJSON()}_${name}`;
+      const path = `${authUserData.userId}/images/__${new Date().toJSON()}_${name}`;
       const storageRef = ref(this._storage, path);
 
       return from(uploadBytes(storageRef, action.data)).pipe(
@@ -176,7 +191,7 @@ export class ImageEffects {
             let mainImageDeleted = false;
 
             if (authUserData && authUserData.mainPhotoUrl) {
-              mainImageDeleted = getImageName(authUserData.mainPhotoUrl) === getImageName(imageUrl)
+              mainImageDeleted = getImageName(authUserData.mainPhotoUrl) === getImageName(imageUrl);
             }
 
             return updateImagesState({ newState, prevAction: action, mainImageDeleted });
@@ -231,7 +246,7 @@ export class ImageEffects {
         name = this._authStateRef.state.userData!.email;
       }
 
-      const storagePath = `/${userId}/images/__${new Date().toJSON()}_${name}`;
+      const storagePath = `${userId}/images/__${new Date().toJSON()}_${name}`;
       const storageRef = ref(this._storage, storagePath);
       const uploadResult = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(uploadResult.ref);

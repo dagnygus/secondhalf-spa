@@ -24,6 +24,7 @@ export enum ChatDialogInputNames {
   sendingStatus = 'sendingStatus',
   messages = 'messages',
   imageUrl = 'imageUrl',
+  targetUserId = 'targetUserId'
 }
 
 export function bindInputs(componentRef: ComponentRef<ChatDialogComponent>, store: Store<AppState>, chatEvents: ChatEvents): void {
@@ -34,6 +35,7 @@ export function bindInputs(componentRef: ComponentRef<ChatDialogComponent>, stor
     assertNotNull(member)
     componentRef.setInput(ChatDialogInputNames.memberNickName, member.nickName),
     componentRef.setInput(ChatDialogInputNames.imageUrl, member.mainPhotoUrl)
+    componentRef.setInput(ChatDialogInputNames.targetUserId, member.userId)
   });
 
   store.pipe(
@@ -84,12 +86,11 @@ export class ChatDialogComponent implements OnDestroy {
 
   @Input() messageToSend = '';
   @Input() memberNickName!: string;
-  @Input() chatStatus!: StateStatus;
-  @Input() sendingStatus!: AsyncActionStatus | null;
-  @Input() messages!: readonly MessageModel[];
+  @Input() chatStatus: StateStatus = null!;
+  @Input() sendingStatus: AsyncActionStatus | null = null;
+  @Input() messages: readonly MessageModel[] = null!;
   @Input() imageUrl: string | null | undefined = null;
-
-  targetUserId: string | null = null;
+  @Input() targetUserId: string = null!;
 
   onSend = new Subject<string>()
   onClose = new Subject<void>();

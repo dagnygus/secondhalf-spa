@@ -101,7 +101,7 @@ export class AuthEffects {
   postAvatar$ = createEffect(() => (this._actions$.pipe(
     ofType(postAvatar),
     exhaustMap((action) => {
-      const storageFilePath = `/${this._auth.currentUser!.uid}/images/__${new Date().toJSON()}_${action.file.name}`;
+      const storageFilePath = `${this._auth.currentUser!.uid}/images/__${new Date().toJSON()}_${action.file.name}`;
       const storageRef = ref(this._storage, storageFilePath);
       return from(uploadBytes(storageRef, action.file)).pipe(
         exhaustMap((uploadResult) => getDownloadURL(uploadResult.ref)),

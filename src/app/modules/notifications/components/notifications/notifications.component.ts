@@ -56,9 +56,9 @@ export class NotificationsComponent extends PageComponent {
       break;
       case 'chat-notification':
         if (this._brkpointObserver.isMatched('(min-width: 560px)')) {
-          const { photoUrl, nickName } = notification;
-          this._chatDialogService.openChatDialogOnNextRoute(notification.uid, nickName, photoUrl, '(min-width: 580px)');
+          this._chatDialogService.openChatDialogOnNextRoute(notification.uid, '(min-width: 580px)');
           this._store.dispatch(removeNotification({ index, info: 'Removing notification from app-notifications component' }));
+          this._router.navigate(['/', 'member', notification.uid]);
           return;
         }
         this._router.navigate(['/', 'member', notification.uid], { fragment: 'chat' });

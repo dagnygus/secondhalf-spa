@@ -13,6 +13,7 @@ import { ChangeDetectionStrategy,
          SimpleChanges,
          Injector } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const photoContainerAnimationMetadata = trigger('photoContainer', [
   transition(':enter', [
@@ -110,13 +111,25 @@ export class CurrentPhotosMediator {
 
 
 function _getImageName(imageUrl: string): string {
-  let index = imageUrl.lastIndexOf('%2F') + 3;
-  let imageName = imageUrl.substring(index);
+  if (environment.funcrtionsEmulator) {
 
-  if (imageName.includes('?')) {
-    index = imageName.indexOf('?');
-    imageName = imageName.substring(0, index);
+    let index = imageUrl.lastIndexOf('%2F') + 3;
+    let imageName = imageUrl.substring(index);
+
+    if (imageName.includes('?')) {
+      index = imageName.indexOf('?');
+      imageName = imageName.substring(0, index);
+    }
+
+    return imageName;
+  } else {
+
+    const index1 = imageUrl.lastIndexOf('%2F');
+    const index2 = imageUrl.lastIndexOf('?');
+    let name = imageUrl.substring(index1 + 3, index2);
+    if (name.includes('%3A')) {
+        name = (name as any).replaceAll('%3A', ':');
+    }
+    return name;
   }
-
-  return imageName;
 }
