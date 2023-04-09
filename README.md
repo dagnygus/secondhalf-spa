@@ -14,6 +14,7 @@ Primary focus points:
 
 External dependencies: 
   - Angular Material
+  - NGRX
   - Tailwind
   - Date-fns
   - Angular-fire
