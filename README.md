@@ -23,3 +23,7 @@ Backend of this application was implememtet in firebase, using cloud functions, 
 ## Chat with somebody
 
 In my dating app is posible to chat with enybody.
+
+## Preview
+
+go to [https://secondhalf-92707.web.app/](https://secondhalf-92707.web.app/)
